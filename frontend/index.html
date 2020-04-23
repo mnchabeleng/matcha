@@ -20,9 +20,10 @@
                     <select onchange="location = this.value;">
                       <option selected value="/">Home</option>
                       <option value="/dashboard.html">Dashboard</option>
+                      <option value="/profile.html">Profile</option>
+                      <option value="/logout.html">Logout</option>
                       <option value="/signup.html">Signup</option>
                       <option value="/login.html">Login</option>
-                      <option value="/logout.html">Logout</option>
                     </select>
                 </div>
             </div>
@@ -47,18 +48,23 @@
             <div class="city"><input type="text" id="location" placeholder="Location"></div>
             <div class="btn"><button class="update-query"></button></div>
         </div>
-        <div class="users"></div>
-        <button class="load-more"></button>
+        <section class="users-section">
+            <div class="users"></div>
+            <button class="load-more"></button>
+        </section>
     </div>
 
     <div id="myModal" class="modal">
-        <div class="modal-content"><span class="close">&times;</span></div>
+        <div class="modal-content">
+            <span class="close"><img src="img/delete.svg" height="35" width="35" alt="delete message"></span>
+            <div class="modal-container"></div>
+        </div>
     </div>
     <div class="footer"></div>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/asRange/jquery-asRange.min.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/modal.js"></script>
-    <script src="js/index.js"></script>
+    <script defer src="vendor/jquery/jquery.min.js"></script>
+    <script defer src="vendor/asRange/jquery-asRange.min.js"></script>
+    <script defer src="js/auth.js"></script>
+    <script defer src="js/modal.js"></script>
+    <script defer src="js/index.js"></script>
 </body>
 </html>

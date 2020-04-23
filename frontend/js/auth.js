@@ -18,18 +18,15 @@ async function getAuthData(){
     return data
 }
 
-async function logoutUser(){
+async function loadContent(){
     const auth = await getAuthData()
-    if (auth.status === false)
+    
+    if (token && auth.status === false)
         localStorage.removeItem('token')
-}
-if (token)
-    logoutUser()
 
-const logout = document.querySelector('#logout')
-if (logout){
-    logout.addEventListener('click', function(){
-        localStorage.removeItem('token')
-        window.location = siteURL
-    })
+    if (token && auth.status === true)
+        document.querySelector('.login-to-display').style.display = 'block'
+    else
+        document.querySelector('.logout-to-display').style.display = 'block'
 }
+loadContent()

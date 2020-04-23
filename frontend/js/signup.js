@@ -33,14 +33,19 @@ for(let i = 2002; i >= 1920; i--)
 }
 
 async function loadSignup(){
-    const cities = await fetch(citiesURL).then(res => res.json())
+    const auth = await getAuthData()
+
+    if (auth.status === false){
+        const cities = await fetch(citiesURL).then(res => res.json())
     
-    $("#location").autocomplete({
-        source: cities.name
-    })
-    
-    console.log(cities)
-    signup()
+        $("#location").autocomplete({
+            source: cities.name
+        })
+        console.log(cities)
+        signup()
+    }
+    else
+        window.location = siteURL + '/profile.html'
 }
 loadSignup()
 

@@ -1,12 +1,13 @@
 'use strict'
 const db = require('../db/connect')
+const userRows = 'id, uname, email, fname, lname, bio, dob, gender, image, online, lat, lng, city, interests'
 
 exports.getUsers = (data, callback) => {
     const gender = '%' + data.gender + '%'
     const city = '%' + data.city + '%'
     const orderby = data.orderby
     const ageRange = data.ageRange
-    const query = 'SELECT * FROM users WHERE gender LIKE ? AND city LIKE ? ' + ageRange + ' ' + orderby
+    const query = 'SELECT ' + userRows + ' FROM users WHERE gender LIKE ? AND city LIKE ? ' + ageRange + ' ' + orderby
     db.query(query, [gender, city], (err, res) => {
         if (err) throw err.message
         callback(res)
@@ -14,7 +15,7 @@ exports.getUsers = (data, callback) => {
 }
 
 exports.getUserById = (id, callback) => {
-    const query = 'SELECT * FROM users WHERE id = ? LIMIT 1'
+    const query = `SELECT ${userRows} FROM users WHERE id = ? LIMIT 1`
     db.query(query, [id], (err, res) => {
         if (err) throw err.message
         callback(res[0])

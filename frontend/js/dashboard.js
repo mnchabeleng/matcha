@@ -52,6 +52,7 @@ function getNotifications(){
 // Display users
 function displayUsers(usersList){
     const usersElement = document.querySelector('.users')
+    
     usersList.forEach(function(user){
         const userElement = document.createElement('div')
         userElement.setAttribute('class', 'user')
@@ -59,9 +60,14 @@ function displayUsers(usersList){
         usersElement.appendChild(userElement)
 
         userElement.addEventListener('click', function(){
+            const users = document.querySelectorAll('.user')
+            users.forEach(function(user){
+                user.classList.remove('active')
+            })
             this.classList.add('active')
         })
     })
+    
     const searchUser = document.querySelector('#search-user')
     searchUser.addEventListener('input', function(){
         const searchQuery = this.value.toLowerCase()

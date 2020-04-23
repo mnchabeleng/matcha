@@ -3,32 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div class="login-to-display">
-        <div class="container">
-            <div class="dashboard">
-                <div class="top"></div>
+        <div class="nav">
+            <div class="container">
                 <div class="col-1">
-                    <input type="text" id="search-user" placeholder="Search user...">
-                    <div class="users"></div>
+                    <a href="/" class="brand">Matcha</a>
                 </div>
                 <div class="col-2">
-                    <input type="text" id="search-message" placeholder="Search message...">
-                    <div class="messages"></div>
-                    <div class="message-form">
-                        <input type="text">
-                        <button id="send-message">Send Message</button>
+                    <div style="min-width:200px;">
+                        <select onchange="location = this.value;">
+                          <option value="/">Home</option>
+                          <option selected value="/dashboard.html">Dashboard</option>
+                          <option value="/signup.html">Signup</option>
+                          <option value="/login.html">Login</option>
+                          <option value="/logout.html">Logout</option>
+                        </select>
                     </div>
-                </div>
-                <div class="col-3">
-                    <div class="notifications"></div>
                 </div>
             </div>
         </div>
-        <div class="footer"></div>
+        <section class="dashboard-section">
+            <div class="container">
+                <div class="dashboard">
+                    <div class="top"></div>
+                    <div class="col-1">
+                        <input type="text" id="search-user" placeholder="Search user...">
+                        <div class="users"></div>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" id="search-message" placeholder="Search message...">
+                        <div class="messages"></div>
+                        <div class="message-form">
+                            <input type="text">
+                            <button id="send-message">Send Message</button>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="notifications"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer"></div>
+        </section>
     </div>
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>

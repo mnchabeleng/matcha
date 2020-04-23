@@ -59,6 +59,10 @@
     grid-row: 2 / 3;
 }
 
+.users-section{
+    margin-bottom: 15px;
+}
+
 .users{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -89,6 +93,7 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
+    z-index: 1;
 }
 
 input[type="text"], select, button{

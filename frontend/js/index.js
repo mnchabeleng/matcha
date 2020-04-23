@@ -29,6 +29,22 @@ function getUsers(){
     })
 }
 
+function displayInterests(interests){
+    const interestsEl = '< class="interests" ul>'
+
+    JSON.parse(interests).forEach(function(i){
+        interestsEl += '<li>'+ i.interest +'</li>'
+    })
+
+    interestsEl += '</ul>'
+
+    return interestsEl
+}
+
+function displayImages(images){
+
+}
+
 async function displayUsers(usersList){
     const auth = await getAuthData()
     const usersElement = document.querySelector('.users')
@@ -44,8 +60,28 @@ async function displayUsers(usersList){
                                     <p>${user.city}</p>`
 
         cardElement.addEventListener('click', function(){
-            const modal = document.getElementById("myModal")
-            modal.style.display = "block";
+            document.getElementById("myModal").style.display = "block";
+
+            const modalContant = document.querySelector('.modal-container')
+            modalContant.innerHTML = ''
+
+            const profileImg = document.createElement('div')
+            profileImg.setAttribute('class', 'profile-img')
+            profileImg.style.backgroundImage = `url(${user.image})`
+            modalContant.appendChild(profileImg)
+
+            const userInfo = document.createElement('div')
+            userInfo.setAttribute('class', 'user-info')
+            userInfo.innerHTML = `<h2>${user.uname}</h2>
+                                 <p>${user.bio}</p>
+                                 <h3>Interests</h3>
+                                 <ul>${
+                                    JSON.parse(user.interests).forEach(function(i){
+                                        '<li>'+ i.interest +'</li>'
+                                    })
+                                 }</ul>
+                                 <h3>Images</h3>`
+            modalContant.appendChild(userInfo)
         })
 
         if (auth.status === true)
@@ -55,8 +91,8 @@ async function displayUsers(usersList){
             likeElement.innerHTML = `<img src="img/heart.svg" height="35" width="35" alt="Like" />`
             cardBodyElement.appendChild(likeElement)
             
-            likeElement.addEventListener('click', function(){
-                console.log('Like', user.uname, 'from', user.city)
+            likeElement.addEventListener('click', function(e){
+                e.stopPropagation()
                 this.style.display = 'none'
             })
         }

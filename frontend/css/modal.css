@@ -12,12 +12,38 @@
   
 .modal-content{
   background-color: #fefefe;
-  margin: 60px auto;
+  margin: 40px auto;
   padding: 20px;
   border: 1px solid #888;
   max-width: 900px;
   text-align: center;
-  height: 2000px;
+  position: relative;
+}
+
+.modal-container{
+  text-align: center;
+}
+
+.modal-container .user-info > *{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.modal-content .close{
+  position: absolute;
+  right: -15px;
+  top: -15px;
+}
+
+.modal-content .profile-img{
+  height: 200px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
   
 .close {
