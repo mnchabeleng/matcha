@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/signup.css">
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="nav">
+        <div class="container">
+            <div class="col-1">
+                <a href="/" class="brand">Matcha</a>
+            </div>
+            <div class="col-2">
+                <div style="min-width:200px;">
+                    <select onchange="location = this.value;">
+                      <option selected value="/">Home</option>
+                      <option value="/dashboard.html">Dashboard</option>
+                      <option selected value="/signup.html">Signup</option>
+                      <option value="/login.html">Login</option>
+                      <option value="/logout.html">Logout</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="signup-section">
+        <div class="container">
+            <div class="signup">
+                <div class="username">
+                    <label>Username*:</label><br>
+                    <input type="text" id="username" placeholder="Username" value="john666">
+                </div>
+                <div class="email">
+                    <label>Email*:</label><br>
+                    <input type="text" id="email" placeholder="email" value="john@mail.com">
+                </div>
+                <div class="first-name">
+                    <label>First name:</label><br>
+                    <input type="text" id="first-name" placeholder="First name" value="john">
+                </div>
+                <div class="last-name">
+                    <label>Last name:</label><br>
+                    <input type="text" id="last-name" placeholder="Last name" value="doe">
+                </div>
+                <div class="location">
+                    <label>Location*:</label>
+                    <input type="text" id="location" placeholder="Location">
+                </div>
+                <div class="gender">
+                    <label>Gender*:</label><br>
+                    <select id="gender">
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                </div>
+                <div class="image">
+                    <label>Picture:</label><br>
+                    <input type="file" id="image">
+                </div>
+                <div class="dob">
+                    <label>Date of birth*:</label><br>
+                    <select id="day"></select>
+                    <select id="month"></select>
+                    <select id="year"></select>
+                </div>
+                <div class="bio">
+                    <label>Bio:</label><br>
+                    <textarea id="bio" rows="3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore porro, adipisci rem distinctio inventore recusandae.</textarea>
+                </div>
+                <div class="password">
+                    <label>Password*:</label><br>
+                    <input type="password" id="password" placeholder="Password" value="password">
+                </div>
+                <div class="password-repeat">
+                    <label>Confirm password*:</label><br>
+                    <input type="password" id="password-repeat" placeholder="Confirm password" value="password">
+                </div>
+                <div class="submit"><button id="submit">Signup</button></div>
+            </div>
+        </div>
+    </section>
+    <div class="footer"></div>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="vendor/asRange/css/asRange.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="nav">
+        <div class="container">
+            <div class="col-1">
+                <a href="/" class="brand">Matcha</a>
+            </div>
+            <div class="col-2">
+                <div style="min-width:200px;">
+                    <select onchange="location = this.value;">
+                      <option selected value="/">Home</option>
+                      <option value="/dashboard.html">Dashboard</option>
+                      <option value="/signup.html">Signup</option>
+                      <option value="/login.html">Login</option>
+                      <option value="/logout.html">Logout</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="filters">
+            <div class="order">
+                <select id="order">
+                    <option value="">Order by</option>
+                    <option value="ageDESC">Age, Young to old</option>
+                    <option value="ageASC">Age, Old to young</option>
+                </select>
+            </div>
+            <div class="gender">
+                <label><input type="checkbox" id="male"> Male</label>
+                <label><input type="checkbox" id="female"> Female</label>
+            </div>
+            <div class="age">
+                <div class="age-range-slider"></div>
+            </div>
+            <div class="city"><input type="text" id="location" placeholder="Location"></div>
+            <div class="btn"><button class="update-query"></button></div>
+        </div>
+        <div class="users"></div>
+        <button class="load-more"></button>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content"><span class="close">&times;</span></div>
+    </div>
+    <div class="footer"></div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/asRange/jquery-asRange.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
