@@ -37,11 +37,11 @@ async function loadSignup(){
 
     if (auth.status === false){
         const cities = await fetch(citiesURL).then(res => res.json())
-    
-        $("#location").autocomplete({
-            source: cities.name
-        })
-        console.log(cities)
+        const fuseOptions = { keys: ["airportCode", "cityName"] }
+        const options = { display: "cityName", key: "airportCode", fuseOptions: fuseOptions }
+        $("#location").fuzzyComplete(airports, options)
+        //$("#location").fuzzyComplete(cities)
+        console.log(options.display)
         signup()
     }
     else
@@ -60,6 +60,7 @@ function signup(){
         const email = document.querySelector('#email')
         const firstName = document.querySelector('#first-name')
         const lastName = document.querySelector('#last-name')
+        const location = document.querySelector('#location')
         const gender = document.querySelector('#gender').value
         const dob = `${year}-${month}-${day}`
         const bio = document.querySelector('#bio')
@@ -71,6 +72,7 @@ function signup(){
             console.log(email.value)
             console.log(firstName.value)
             console.log(lastName.value)
+            console.log(location.value)
             console.log(gender)
             console.log(dob)
             console.log(bio.value)

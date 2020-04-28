@@ -4,7 +4,9 @@ document.title = 'Matcha Dashboard'
 
 const usersURL = 'data/users.json'
 const messagesURL = 'data/messages.json'
-const notificationsURL = 'data/notifications.json'
+//const notificationsURL = 'data/notifications.json'
+const notificationsURL = 'http://localhost:3300/notifications/'
+let messageUname = undefined
 
 const topCol = document.querySelector('.top')
 const col1 = document.querySelector('.col-1')
@@ -15,13 +17,14 @@ topCol.innerHTML = `<h1>${document.title}</h1>`
 
 async function loadDashboard(){
     const auth = await getAuthData()
+    const user = auth.authData
 
     if (auth.status === true)
     {
-        document.querySelector('.login-to-display').style.display = 'block'
         getUsers()
         getMessages()
         getNotifications()
+        sendMessage()
     }
     else
         window.location = siteURL + '/login.html'
@@ -44,7 +47,9 @@ function getMessages(){
 
 // Get notifications from API
 function getNotifications(){
-    fetch(notificationsURL).then(res => res.json()).then((data) => {
+    fetch(notificationsURL,{
+        headers: {'Authorization': 'Bearer ' + token}
+    }).then(res => res.json()).then((data) => {
         displayNotifications(data)
     })
 }
@@ -59,12 +64,21 @@ function displayUsers(usersList){
         userElement.innerText = user.username
         usersElement.appendChild(userElement)
 
+        console.log(messageUname)
+        console.log(user.username)
+        if(messageUname == user.username)
+            userElement.classList.add('active')
+
         userElement.addEventListener('click', function(){
+            messageUname = user.username
             const users = document.querySelectorAll('.user')
             users.forEach(function(user){
                 user.classList.remove('active')
             })
             this.classList.add('active')
+            localStorage.setItem('messageUname', user.username)
+            document.querySelector('.messages').style.display = 'block'
+            document.querySelector('.message-form').style.display = 'block'
         })
     })
     
@@ -111,17 +125,18 @@ function displayNotifications(notificationsList){
         deleteNotification.setAttribute('class', 'delete')
         deleteNotification.innerHTML = `<img src="img/delete.svg" height="25" width="25" alt="delete message">`
         
-        notificationElement.innerHTML = `<p>${notification.description}</p>`
+        notificationElement.innerHTML = `<p><b>${notification.type}</b>: ${notification.description}</p>`
         notificationElement.appendChild(deleteNotification)
         notificationsElement.appendChild(notificationElement)
 
         deleteNotification.addEventListener('click', function(){
+            fetch(notificationsURL + notification.id,{
+                method: 'DELETE',
+                headers: {'Authorization': 'Bearer ' + token}
+            })
             notificationElement.style.display = 'none'
         })
     })
-    const loadMore = document.createElement('button')
-    loadMore.innerText = 'Load More'
-    notificationsElement.appendChild(loadMore)
 }
 
 function filterUsers(searchQuery = undefined){
@@ -144,5 +159,17 @@ function filterMessages(searchQuery = undefined){
             message.style.display = 'block'
         else
             message.style.display = 'none'
+    })
+}
+
+// Send message
+function sendMessage(){
+    const sendMessage = document.querySelector('#send-message')
+    const message = document.querySelector('#message').value
+    sendMessage.addEventListener('click', function(e){
+        if(messageUname != undefined)
+            console.log(message)
+        else
+            console.log('user not defined')
     })
 }

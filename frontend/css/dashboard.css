@@ -111,6 +111,11 @@ button::-moz-focus-inner {
 .messages{
     height: calc(100% - 130px);
     padding: 10px;
+    display: none;
+}
+
+.message-form{
+    display: none;
 }
 
 .notifications{
@@ -128,20 +133,12 @@ button::-moz-focus-inner {
     position: relative;
 }
 
+.notifications > *{
+    padding: 15px;
+}
+
 .delete{
     position: absolute;
     right: -10px;
     top: -10px;
-}
-
-.footer{
-    text-align: center;
-    height: 80px;
-    line-height: 80px;
-    background-color: #323c40;
-    color: #ffffff;
-}
-
-.footer::after {
-    content: "Hello World!";
 }

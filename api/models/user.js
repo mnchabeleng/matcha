@@ -3,12 +3,13 @@ const db = require('../db/connect')
 const userRows = 'id, uname, email, fname, lname, bio, dob, gender, image, online, lat, lng, city, interests'
 
 exports.getUsers = (data, callback) => {
+    const user = data.user
     const gender = '%' + data.gender + '%'
     const city = '%' + data.city + '%'
     const orderby = data.orderby
     const ageRange = data.ageRange
-    const query = 'SELECT ' + userRows + ' FROM users WHERE gender LIKE ? AND city LIKE ? ' + ageRange + ' ' + orderby
-    db.query(query, [gender, city], (err, res) => {
+    const query = 'SELECT ' + userRows + ' FROM users WHERE uname NOT IN(SELECT reciever AS uname FROM likes WHERE sender = ?) AND uname != ? AND gender LIKE ? AND city LIKE ? ' + ageRange + ' ' + orderby
+    db.query(query, [user, user, gender, city], (err, res) => {
         if (err) throw err.message
         callback(res)
     })

@@ -2,6 +2,11 @@
 const express = require('express')
 const router = express.Router()
 const userModel = require('../models/user')
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv').config()
+const {
+    JWT_SECRET_KEY
+} = process.env
 
 router.route('/')
 .get((req, res, next) => {
@@ -39,6 +44,16 @@ router.route('/')
         }
     }
 
+    let token = undefined
+    data.user = ''
+    const authHeader = req.headers['authorization']    
+    token = authHeader.split(' ')[1]
+    try
+    {
+        const decoded = jwt.verify(token, JWT_SECRET_KEY)
+        data.user = decoded.uname
+    }catch(err){}
+
     userModel.getUsers(data, (result) => {
         const page = parseInt(req.query.page)
 		const limit = parseInt(req.query.limit)
@@ -57,18 +72,6 @@ router.route('/')
             user.request = request
         })
 
-        res.status(200).json(result)
-    })
-})
-
-router.route('/filter')
-.get((req, res, next) => {
-    const data = {}
-    data.gender = 'f'
-    data.city = 'indea'
-    data.orderby = 'ORDER BY dob DESC'
-    console.log(Number('1998-10-23T22:00:00.000Z'))
-    userModel.filterUsers(data, (result) => {
         res.status(200).json(result)
     })
 })

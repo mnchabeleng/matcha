@@ -26,13 +26,16 @@ app.use((req, res, next)=>{
     next()
 })
 
+const verifyAuth = require('./middleware/verify_auth')
 // api routes
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
 app.use('/users', require('./routes/users'))
-app.use('/likes', require('./routes/likes'))
+app.use('/likes', verifyAuth, require('./routes/likes'))
+app.use('/messages', verifyAuth, require('./routes/messages'))
+app.use('/notifications', verifyAuth, require('./routes/notifications'))
 app.use('/messages', require('./routes/messages'))
-app.use('/notifications', require('./routes/notifications'))
+app.use('/match', verifyAuth, require('./routes/matches'))
 
 // error handling
 app.use((req, res, next)=>{

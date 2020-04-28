@@ -47,5 +47,5 @@ body{
 }
 
 .footer::after {
-    content: "Hello World!";
+    content: "Credits, Hello World!";
 }

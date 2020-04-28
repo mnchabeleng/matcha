@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="vendor/autocomplete/dist/css/fuzzycomplete.min.css">
 </head>
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -85,8 +86,29 @@
         </section>
         <div class="footer"></div>
     </div>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="js/signup.js"></script>
+    <script defer src="vendor/jquery/jquery.min.js"></script>
+    <script defer src="vendor/autocomplete/example/fuse.min.js"></script>
+    <script defer src="vendor/autocomplete/dist/js/fuzzycomplete.min.js"></script>
+    <script defer src="js/auth.js"></script>
+    <script defer src="js/signup.js"></script>
+    <script>
+        var companies = [
+            {"companyName":"Aperture Science"},
+            {"companyName":"MomCorp"},
+            {"companyName":"Wayne Enterprises"},
+            {"companyName":"Umbrella Corp"},
+            {"companyName":"Gringotts"},
+            {"companyName":"Globex"}
+        ];
+
+        var airports = [
+            {"airportCode":"MEL","cityName":"Melbourne, Australia"},
+            {"airportCode":"LAX","cityName":"Los Angeles, USA"},
+            {"airportCode":"LHR","cityName":"Heathrow, London"},
+            {"airportCode":"HKG","cityName":"Hong Kong"},
+            {"airportCode":"NRT","cityName":"Narita, Tokyo, Japan"},
+            {"airportCode":"FRA","cityName":"Frankfurt, Germany"}
+        ];
+    </script>
 </body>
 </html>

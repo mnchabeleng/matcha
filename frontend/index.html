@@ -13,17 +13,23 @@
     <div class="nav">
         <div class="container">
             <div class="col-1">
-                <a href="/" class="brand">Matcha</a>
+                <a href="index.html" class="brand">Matcha</a>
             </div>
             <div class="col-2">
-                <div style="min-width:200px;">
+                <div class="login-to-display" style="min-width:200px;">
                     <select onchange="location = this.value;">
-                      <option selected value="/">Home</option>
-                      <option value="/dashboard.html">Dashboard</option>
-                      <option value="/profile.html">Profile</option>
-                      <option value="/logout.html">Logout</option>
-                      <option value="/signup.html">Signup</option>
-                      <option value="/login.html">Login</option>
+                      <option selected value="index.html">Home</option>
+                      <option value="dashboard.html">Dashboard</option>
+                      <option value="match.html">Match</option>
+                      <option value="profile.html">Profile</option>
+                      <option value="logout.html">Logout</option>
+                    </select>
+                </div>
+                <div class="logout-to-display" style="min-width:200px;">
+                    <select onchange="location = this.value;">
+                      <option selected value="index.html">Home</option>
+                      <option value="signup.html">Signup</option>
+                      <option value="login.html">Login</option>
                     </select>
                 </div>
             </div>

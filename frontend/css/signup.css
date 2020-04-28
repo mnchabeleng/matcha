@@ -8,7 +8,7 @@ body{
 }
 
 .signup-section{
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     padding: 20px 0;
 }
 
@@ -18,70 +18,78 @@ body{
 }
 
 .signup{
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-gap: 5px;
     padding: 5px;
 }
 
 .signup > *{
-    grid-column: span 12;
     padding: 5px 0;
 }
 
-.signup .username{
-    grid-column: 1 / 7;
-    grid-row: 1 / 2;
-}
-
-.signup .email{
-    grid-column: 7 / 13;
-    grid-row: 1 / 2;
-}
-
-.signup .first-name{
-    grid-column: 1 / 7;
-    grid-row: 2 / 3;
-}
-
-.signup .last-name{
-    grid-column: 7 / 13;
-    grid-row: 2 / 3;
-}
-
-.signup .location{
-    grid-column: 1 / 7;
-    grid-row: 3 / 4;
-}
-
-.signup .gender{
-    grid-column: 1 / 7;
-    grid-row: 4 / 5;
-}
-
-.signup .dob{
-    grid-column: 1 / 7;
-    grid-row: 5 / 6;
-}
-
-.signup .image{
-    grid-column: 1 / 7;
-    grid-row: 6 / 7;
-}
-
-.signup .bio{
-    grid-column: span 12;
-    grid-row: 7 / 8;
-}
-
-.signup .password{
-    grid-column: 1 / 7;
-    grid-row: 8 / 9;
-}
-
-.signup .password-repeat{
-    grid-column: 7 / 13;
-    grid-row: 8 / 9;
+@media(min-width: 600px){
+    .signup{
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-gap: 5px;
+    }
+    
+    .signup > *{
+        grid-column: span 12;
+    }
+    
+    .signup .username{
+        grid-column: 1 / 7;
+        grid-row: 1 / 2;
+    }
+    
+    .signup .email{
+        grid-column: 7 / 13;
+        grid-row: 1 / 2;
+    }
+    
+    .signup .first-name{
+        grid-column: 1 / 7;
+        grid-row: 2 / 3;
+    }
+    
+    .signup .last-name{
+        grid-column: 7 / 13;
+        grid-row: 2 / 3;
+    }
+    
+    .signup .location{
+        grid-column: 1 / 7;
+        grid-row: 3 / 4;
+    }
+    
+    .signup .gender{
+        grid-column: 1 / 7;
+        grid-row: 4 / 5;
+    }
+    
+    .signup .dob{
+        grid-column: 1 / 7;
+        grid-row: 5 / 6;
+    }
+    
+    .signup .image{
+        grid-column: 1 / 7;
+        grid-row: 6 / 7;
+    }
+    
+    .signup .bio{
+        grid-column: span 12;
+        grid-row: 7 / 8;
+    }
+    
+    .signup .password{
+        grid-column: 1 / 7;
+        grid-row: 8 / 9;
+    }
+    
+    .signup .password-repeat{
+        grid-column: 7 / 13;
+        grid-row: 8 / 9;
+    }
 }
 
 input[type="text"], input[type="password"], textarea{

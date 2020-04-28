@@ -19,7 +19,9 @@ loadUsers()
 
 function getUsers(){    
     const queries = `page=${page}&limit=${limit}&orderby=${orderBy}&gender=${gender}&min=${min}&max=${max}&city=${city}`
-    fetch(matchaAPI + 'users' + '?' + queries).then(res => res.json()).then((data) => {
+    fetch(matchaAPI + 'users' + '?' + queries,{
+        headers: {'Authorization': 'Bearer ' + token}
+    }).then(res => res.json()).then((data) => {
         if (data.length < 9)
             loadMore.style.display = 'none'
         else
@@ -59,6 +61,9 @@ async function displayUsers(usersList){
                                     <p>${user.uname} ~ ${getAge(user.dob)}</p>
                                     <p>${user.city}</p>`
 
+        cardElement.appendChild(cardBodyElement)
+        usersElement.appendChild(cardElement)
+
         cardElement.addEventListener('click', function(){
             document.getElementById("myModal").style.display = "block";
 
@@ -75,11 +80,7 @@ async function displayUsers(usersList){
             userInfo.innerHTML = `<h2>${user.uname}</h2>
                                  <p>${user.bio}</p>
                                  <h3>Interests</h3>
-                                 <ul>${
-                                    JSON.parse(user.interests).forEach(function(i){
-                                        '<li>'+ i.interest +'</li>'
-                                    })
-                                 }</ul>
+                                 <p>${user.interests}</p>
                                  <h3>Images</h3>`
             modalContant.appendChild(userInfo)
         })
@@ -93,12 +94,15 @@ async function displayUsers(usersList){
             
             likeElement.addEventListener('click', function(e){
                 e.stopPropagation()
+                const notificationsURL = `http://localhost:3300/likes/${user.uname}`
+                fetch(notificationsURL,{
+                    method: 'POST',
+                    headers: {'Authorization': 'Bearer ' + token}
+                })
+                //cardElement.style.display = 'none'
                 this.style.display = 'none'
             })
         }
-        
-        cardElement.appendChild(cardBodyElement)
-        usersElement.appendChild(cardElement)
     })
 }
 

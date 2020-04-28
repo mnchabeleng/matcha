@@ -12,16 +12,16 @@
         <div class="nav">
             <div class="container">
                 <div class="col-1">
-                    <a href="/" class="brand">Matcha</a>
+                    <a href="index.html" class="brand">Matcha</a>
                 </div>
                 <div class="col-2">
                     <div style="min-width:200px;">
                         <select onchange="location = this.value;">
-                          <option value="/">Home</option>
-                          <option selected value="/dashboard.html">Dashboard</option>
-                          <option value="/signup.html">Signup</option>
-                          <option value="/login.html">Login</option>
-                          <option value="/logout.html">Logout</option>
+                          <option value="index.html">Home</option>
+                          <option selected value="dashboard.html">Dashboard</option>
+                          <option value="signup.html">Signup</option>
+                          <option value="login.html">Login</option>
+                          <option value="logout.html">Logout</option>
                         </select>
                     </div>
                 </div>
@@ -38,10 +38,10 @@
                     <div class="col-2">
                         <input type="text" id="search-message" placeholder="Search message...">
                         <div class="messages"></div>
-                        <div class="message-form">
-                            <input type="text">
+                        <form class="message-form">
+                            <input type="text" id="message">
                             <button id="send-message">Send Message</button>
-                        </div>
+                        </form>
                     </div>
                     <div class="col-3">
                         <div class="notifications"></div>

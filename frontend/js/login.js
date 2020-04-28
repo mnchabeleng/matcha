@@ -6,10 +6,7 @@ const loginUrl = 'http://loacalhost:3300/login'
 async function loadLogin(){
     const auth = await getAuthData()
     if (auth.status === false)
-    {
-        document.querySelector('.logout-to-display').style.display = 'block'
         login()
-    }
     else
         window.location = siteURL + '/dashboard.html'
 
