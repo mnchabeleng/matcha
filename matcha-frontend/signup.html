@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="vendor/amsify/css/amsify.suggestags.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/signup.css">
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="logout-to-display">
+        <div class="nav">
+            <div class="container">
+                <div class="col-1">
+                    <a href="index.html" class="brand">Matcha</a>
+                </div>
+                <div class="col-2">
+                    <select onchange="location = this.value;">
+                        <option value="index.html">Home</option>
+                        <option selected value="signup.html">Signup</option>
+                        <option value="login.html">Login</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <section class="signup-section">
+            <div class="container">
+                <form class="signup-form">
+                    <div class="signup">
+                        <div class="username">
+                            <label>Username*:</label><br>
+                            <input type="text" name="username" id="username" placeholder="Username" value="john666">
+                            <span class="error"></span>
+                        </div>
+                        <div class="email">
+                            <label>Email*:</label><br>
+                            <input type="text" name="email" id="email" placeholder="email" value="john@mail.com">
+                            <span class="error"></span>
+                        </div>
+                        <div class="first-name">
+                            <label>First name*:</label><br>
+                            <input type="text" name="fname" id="fname" placeholder="First name" value="john">
+                            <span class="error"></span>
+                        </div>
+                        <div class="last-name">
+                            <label>Last name*:</label><br>
+                            <input type="text" name="lname" id="lname" placeholder="Last name" value="doe">
+                            <span class="error"></span>
+                        </div>
+                        <div class="location">
+                            <label>Location*:</label>
+                            <input type="text" name="location" id="location" placeholder="Location">
+                            <div class="suggestion-list"></div>
+                            <input type="text" name="lat" id="lat" hidden>
+                            <input type="text" name="lng" id="lng" hidden>
+                            <span class="error"></span>
+                        </div>
+                        <div class="gender">
+                            <label>Gender*:</label><br>
+                            <select name="gender" id="gender">
+                                <option value="M">M</option>
+                                <option value="F">F</option>
+                            </select>
+                            <span class="error"></span>
+                        </div>
+                        <div class="image">
+                            <label>Picture*:</label><br>
+                            <input type="file" name="image" id="image">
+                            <span class="error"></span>
+                        </div>
+                        <div class="dob">
+                            <label>Date of birth*:</label><br>
+                            <select name="day" id="day"></select>
+                            <select name="month" id="month"></select>
+                            <select name="year" id="year"></select>
+                            <span class="error"></span>
+                        </div>
+                        <div class="interests">
+                            <label>Interests*:</label>
+                            <input type="text" name="interests" id="interests" name="interests" placeholder="Interests">
+                            <span class="error"></span>
+                        </div>
+                        <div class="bio">
+                            <label>Bio*:</label><br>
+                            <textarea name="bio" id="bio" rows="3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore porro, adipisci rem distinctio inventore recusandae.</textarea>
+                            <span class="error"></span>
+                        </div>
+                        <div class="password">
+                            <label>Password*:</label><br>
+                            <input type="password" name="password" id="password" placeholder="Password" value="password">
+                            <span class="error"></span>
+                        </div>
+                        <div class="password-repeat">
+                            <label>Confirm password*:</label><br>
+                            <input type="password" name="password_repeat" id="password_repeat" placeholder="Confirm password" value="password">
+                            <span class="error"></span>
+                        </div>
+                        <div id="signup-response"></div>
+                        <div class="submit"><button type="submit" id="submit">Signup</button></div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <div class="footer"></div>
+    </div>
+    <script defer src="vendor/jquery/jquery.min.js"></script>
+    <script defer src="vendor/amsify/js/jquery.amsify.suggestags.js"></script>
+    <script defer src="js/auth.js"></script>
+    <script defer src="js/response.js"></script>
+    <script defer src="js/signup.js"></script>
+</body>
+</html>

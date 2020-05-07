@@ -1,0 +1,135 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.signup-section{
+    min-height: calc(100vh - 80px);
+    padding: 20px 0;
+}
+
+.container{
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.signup{
+    padding: 5px;
+}
+
+.signup > *{
+    padding: 5px 0;
+}
+
+.signup .error{
+    color: rgba(255, 0, 0, 0.8);
+    display: block;
+}
+
+@media(min-width: 600px){
+    .signup{
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-gap: 5px;
+    }
+    
+    .signup > *{
+        grid-column: span 12;
+    }
+    
+    .signup .username{
+        grid-column: 1 / 7;
+        grid-row: 1 / 2;
+    }
+    
+    .signup .email{
+        grid-column: 7 / 13;
+        grid-row: 1 / 2;
+    }
+    
+    .signup .first-name{
+        grid-column: 1 / 7;
+        grid-row: 2 / 3;
+    }
+    
+    .signup .last-name{
+        grid-column: 7 / 13;
+        grid-row: 2 / 3;
+    }
+    
+    .signup .location{
+        grid-column: 1 / 7;
+        grid-row: 3 / 4;
+    }
+    
+    .signup .gender{
+        grid-column: 1 / 7;
+        grid-row: 4 / 5;
+    }
+    
+    .signup .dob{
+        grid-column: 1 / 7;
+        grid-row: 5 / 6;
+    }
+    
+    .signup .image{
+        grid-column: 1 / 7;
+        grid-row: 6 / 7;
+    }
+    
+    .signup .interests{
+        grid-column: span 12;
+        grid-row: 7 / 8;
+    }
+
+    .signup .bio{
+        grid-column: span 12;
+        grid-row: 8 / 9;
+    }
+    
+    .signup .password{
+        grid-column: 1 / 7;
+        grid-row: 9 / 10;
+    }
+    
+    .signup .password-repeat{
+        grid-column: 7 / 13;
+        grid-row: 9 / 10;
+    }
+}
+
+button{
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #00aced;
+    border: none;
+    color: #ffffff;
+    border-radius: 3px;
+    transition: background-color 500ms;
+    outline: 0;
+}
+
+button:hover{
+    background-color: #009ad5;
+}
+
+button::-moz-focus-inner{
+    border: 0;
+}
+
+.footer{
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+    background-color: #323c40;
+    color: #ffffff;
+}
+
+.footer::after {
+    content: "Hello World!";
+}

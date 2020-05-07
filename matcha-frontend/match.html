@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="vendor/asRange/css/asRange.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/match.css">
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="login-to-display">
+        <div class="nav">
+            <div class="container">
+                <div class="col-1">
+                    <a href="index.html" class="brand">Matcha</a>
+                </div>
+                <div class="col-2">
+                    <select onchange="location = this.value;">
+                        <option value="index.html">Home</option>
+                        <option value="dashboard.html">Dashboard</option>
+                        <option selected value="match.html">Match</option>
+                        <option value="profile.html">Profile</option>
+                        <option value="logout.html">Logout</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <section class="match-section">
+            <div class="container">
+                <h1>Your matches</h1>
+                <div id="block-response"></div>
+                <div class="users"></div>
+                <button class="load-more"></button>
+            </div>
+        </section>
+        <div id="messageModal" class="modal">
+            <div class="modal-content">
+                <span class="close"><img src="img/delete.svg" height="35" width="35" alt="delete message"></span>
+                <div class="modal-container">
+                    <form class="message-form" action="">
+                        <div id="response"></div>
+                        <textarea id="message" rows="3"></textarea>
+                        <button>Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="blockUserModal" class="modal">
+            <div class="modal-content">
+                <span class="close"><img src="img/delete.svg" height="35" width="35" alt="delete message"></span>
+                <div class="modal-container"></div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+    <script defer src="js/auth.js"></script>
+    <script defer src="js/response.js"></script>
+    <script defer src="js/modal.js"></script>
+    <script defer src="js/match.js"></script>
+</body>
+</html>

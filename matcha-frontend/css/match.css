@@ -1,0 +1,19 @@
+.container{
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.match-section{
+    min-height: calc(100vh - 80px);
+    padding: 20px 0;
+}
+
+.modal-content{
+    max-width: 450px;
+}
+
+.block-user{
+    position: absolute;
+    right: -10px;
+    top: -10px;
+}

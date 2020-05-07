@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="login-to-display">
+        <div class="nav">
+            <div class="container">
+                <div class="col-1">
+                    <a href="index.html" class="brand">Matcha</a>
+                </div>
+                <div class="col-2">
+                    <select onchange="location = this.value;">
+                        <option value="index.html">Home</option>
+                        <option selected value="dashboard.html">Dashboard</option>
+                        <option value="match.html">Match</option>
+                        <option value="profile.html">Profile</option>
+                        <option value="logout.html">Logout</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <section class="dashboard-section">
+            <div class="container">
+                <div class="dashboard">
+                    <div class="top" hidden></div>
+                    <div class="col-1 users-col">
+                        <input type="text" id="search-user" placeholder="Search user...">
+                        <div class="users"></div>
+                    </div>
+                    <div class="col-2 messages-col">
+                        <input type="text" id="search-message" placeholder="Search message...">
+                        <div class="messages"></div>
+                        <div class="message-form"></div>
+                    </div>
+                    <div class="col-3 notifications-col">
+                        <div class="notifications"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer"></div>
+        </section>
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+.container{
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.profile-section{
+    min-height: calc(100vh - 80px);
+    padding: 20px 0;
+}
+
+.profile-img{
+    height: 200px;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.profile-section ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.profile-section ul li{
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #cccccc;
+}
+
+.profile-section ul li .header,
+.profile-section ul li .content{
+    padding: 10px;
+}
+
+.profile-section ul li .header{
+    background-color: #cccccc;
+    font-weight: 400;
+}
+
+.profile-section ul li .edit{
+    position: absolute;
+    right: -10px;
+    top: -10px;
+}
+
+input[type="text"], select, button{
+    box-sizing: border-box;
+}
+
+button{
+    text-align: center;
+    padding: 10px;
+    background-color: #00aced;
+    border: none;
+    color: #ffffff;
+    border-radius: 3px;
+    transition: background-color 500ms;
+    outline: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+button:hover{
+    background-color: #009ad5;
+}
+
+button::-moz-focus-inner {
+    border: 0;
+}   

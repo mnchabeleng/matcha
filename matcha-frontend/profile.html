@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="vendor/autocomplete/dist/css/fuzzycomplete.min.css">
+    <link rel="stylesheet" href="vendor/amsify/css/amsify.suggestags.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Profile</title>
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="login-to-display">
+        <div class="nav">
+            <div class="container">
+                <div class="col-1">
+                    <a href="index.html" class="brand">Matcha</a>
+                </div>
+                <div class="col-2">
+                    <select onchange="location = this.value;">
+                        <option value="index.html">Home</option>
+                        <option value="dashboard.html">Dashboard</option>
+                        <option value="match.html">Match</option>
+                        <option selected value="profile.html">Profile</option>
+                        <option value="logout.html">Logout</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <section class="profile-section">
+                <div class="profile-img"></div>
+                <ul>
+                    <li>
+                        <div class="header">Information:</div>
+                        <div class="content">
+                            <p><b>Username: </b><span id="username"></span></p>
+                            <p><b>Email: </b><span id="email"></span></p>
+                            <p><b>First name: </b><span id="first-name"></span></p>
+                            <p><b>Last name: </b><span id="last-name"></span></p>
+                            <p><b>Gender: </b><span id="gender"></span></p>
+                            <p><b>Date of birth: </b><span id="dob"></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="header">Location:</div>
+                        <div class="content">
+                            <form id="location-form">
+                                <div id="location-response"></div>
+                                <label>Location:</label>
+                                <input type="text" name="location" id="location">
+                                <div class="suggestion-list"></div>
+                                <input type="text" name="lat" id="lat" hidden>
+                                <input type="text" name="lng" id="lng" hidden>
+                                <button type="submit">Update location</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="header">Interests:</div>
+                        <div class="content">
+                            <form id="interests-form">
+                                <div id="interests-reponse"></div>
+                                <label>Interests:</label>
+                                <input type="text" name="interests" id="interests" placeholder="Interests">
+                                <button type="submit">Update interests</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="header">Bio:</div>
+                        <div class="content">
+                            <form id="bio-form">
+                                <div id="bio-response"></div>
+                                <label>Bio:</label>
+                                <textarea name="" id="bio" rows="3"></textarea>
+                                <button type="submit">Update bio</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="header">Password:</div>
+                        <div class="content">
+                            <form id="password-form">
+                                <div id="password-response"></div>
+                                <label>Old password:</label>
+                                <input type="password" id="password-old" placeholder="Old password">
+                                <label>Password:</label>
+                                <input type="password" id="password" placeholder="Password">
+                                <label>Re-enter password:</label>
+                                <input type="password" id="password-repeat" placeholder="Re-enter password">
+                                <button type="submit">Update password</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="header">Images:</div>
+                        <div class="content">
+                            <form id="password-form">
+                                <div id="images-response"></div>
+                                <button type="submit">Upload image</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div class="footer"></div>
+    </div>
+    <script defer src="vendor/jquery/jquery.min.js"></script>
+    <script defer src="vendor/autocomplete/example/fuse.min.js"></script>
+    <script defer src="vendor/autocomplete/dist/js/fuzzycomplete.min.js"></script>
+    <script defer src="vendor/amsify/js/jquery.amsify.suggestags.js"></script>
+    <script defer src="js/auth.js"></script>
+    <script defer src="js/response.js"></script>
+    <script defer src="js/profile.js"></script>
+    <script>
+        var companies = [
+            {"companyName":"Aperture Science"},
+            {"companyName":"MomCorp"},
+            {"companyName":"Wayne Enterprises"},
+            {"companyName":"Umbrella Corp"},
+            {"companyName":"Gringotts"},
+            {"companyName":"Globex"}
+        ];
+
+        var airports = [
+            {"airportCode":"MEL","cityName":"Melbourne, Australia"},
+            {"airportCode":"LAX","cityName":"Los Angeles, USA"},
+            {"airportCode":"LHR","cityName":"Heathrow, London"},
+            {"airportCode":"HKG","cityName":"Hong Kong"},
+            {"airportCode":"NRT","cityName":"Narita, Tokyo, Japan"},
+            {"airportCode":"FRA","cityName":"Frankfurt, Germany"}
+        ];
+    </script>
+</body>
+</html>
