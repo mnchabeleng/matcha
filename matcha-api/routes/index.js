@@ -38,7 +38,10 @@ router.post('/login', (req, res, next) => {
                             const tokenData = {
                                 id: data.id,
                                 uname: data.uname,
-                                email: data.email
+                                email: data.email,
+                                city: data.city,
+                                lat: data.lat,
+                                lng: data.lng
                             }
                             const token = jwt.sign(tokenData, JWT_SECRET_KEY, {expiresIn: '1h'})
                             res.status(200).json({

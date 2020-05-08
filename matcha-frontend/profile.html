@@ -48,7 +48,7 @@
                             <form id="location-form">
                                 <div id="location-response"></div>
                                 <label>Location:</label>
-                                <input type="text" name="location" id="location" autocomplete="off">
+                                <input type="text" name="location" id="location" placeholder="Type a location" autocomplete="off">
                                 <div class="suggestion-list"></div>
                                 <input type="text" name="lat" id="lat" hidden>
                                 <input type="text" name="lng" id="lng" hidden>
@@ -105,10 +105,9 @@
                     <li>
                         <div class="header">Images:</div>
                         <div class="content">
-                            <form id="password-form">
-                                <div id="images-response"></div>
-                                <button type="submit">Upload image</button>
-                            </form>
+                            <div id="images-response"></div>
+                            <div class="images-forms"></div>
+                            <ul class="images"></ul>
                         </div>
                     </li>
                 </ul>

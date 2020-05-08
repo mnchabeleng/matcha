@@ -1,6 +1,6 @@
 'use strict'
 const userURL = 'http://localhost:3300/profile/'
-const citiesURL = 'data/cities.json'
+const citiesURL = 'http://localhost:3300/cities/'
 
 const updateLocationURL = 'http://localhost:3300/profile/location/'
 const updateInterestsURL = 'http://localhost:3300/profile/interests/'
@@ -32,6 +32,7 @@ function displayUserData(user){
     handleInterests(user)
     handleBio(user)
     handlePassword()
+    handleImages(user)
 }
 
 function handleProfileImg(user){
@@ -101,7 +102,7 @@ async function searchCities(searchQuery){
 
     lat.value = ''
     lng.value = ''
-    const cities = await fetch(citiesURL).then(res => res.json())
+    const cities = await fetch(citiesURL + `?q=${encodeURIComponent(searchQuery)}`).then(res => res.json())
     
     let matches = cities.filter(function(city){
         const regex = new RegExp(`^${searchQuery}`, 'gi')
@@ -239,4 +240,95 @@ function validatePassword(validation){
         passwordRepeat.innerText = validation.password_repeat
     else
         passwordRepeat.innerText = ''
+}
+
+const imagesForms = document.querySelector('.images-forms')
+const imagesEl = document.querySelector('ul.images')
+
+function imageForm(id){
+    const imageForm = document.createElement('form')
+    const imageInput = document.createElement('input')
+    imageInput.type = 'file'
+    imageInput.name = 'image'
+    const imageButton = document.createElement('button')
+    imageButton.type = 'submit'
+    imageButton.innerText = 'Upload image'
+
+    const errorEl = document.createElement('div')
+    errorEl.setAttribute('class', 'error')
+    errorEl.innerText = ''
+
+    imageForm.appendChild(imageInput)
+    imageForm.appendChild(imageButton)
+    imagesForms.appendChild(imageForm)
+    imagesForms.appendChild(errorEl)
+
+    imageForm.addEventListener('submit', function(e){
+        e.preventDefault()
+        fetch(updateImagesURL + id,{
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            body: new FormData(this)
+        }).then(function(res){
+            return res.json()
+        }).then(function(data){
+            if(data.status == false && data.validation == true){
+                errorEl.innerText = data.messages.image
+            }
+            else if(data.status == true){
+                errorEl.innerText = ''
+                displaySuccess({message: data.message, class: '#images-response'})
+                imageForm.reset()
+                imageForm.style.display = 'none'
+                const imageEl = document.createElement('li')
+                imageEl.innerHTML = `<img src="${data.image}" width="100%">`
+                imagesEl.appendChild(imageEl)
+            }
+        })
+    })
+}
+
+function handleImage1(){
+    imageForm(1)
+}
+
+function handleImage2(){
+    imageForm(2)
+}
+
+function handleImage3(){
+    imageForm(3)
+}
+
+function handleImage4(){
+    imageForm(4)
+}
+
+function handleImage5(){
+    imageForm(5)
+}
+
+function handleImages(user){
+    if(!user.image1)
+        handleImage1()
+    if(!user.image2)
+        handleImage2()
+    if(!user.image3)    
+        handleImage3()
+    if(!user.image4)
+        handleImage4()
+    if(!user.image5)
+        handleImage5()
+    
+    const userImages = `${user.image1},${user.image2},${user.image3},${user.image4},${user.image5}`.split(',')
+
+    userImages.forEach(function(image){
+        if(image != 'null'){
+            const imageEl = document.createElement('li')
+            imageEl.innerHTML = `<img src="${image}" width="100%">`
+            imagesEl.appendChild(imageEl)
+        }
+    })
 }

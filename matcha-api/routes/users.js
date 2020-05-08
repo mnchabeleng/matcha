@@ -10,7 +10,7 @@ const {
 
 router.route('/')
 .get((req, res, next) => {
-    const data = {gender: '', city: '', ageRange: '', orderby: ''}
+    const data = {gender: '', city: '', ageRange: '', orderby: 'ORDER BY id DESC'}
 
     if (req.query.min || req.query.max)
     {
@@ -52,6 +52,7 @@ router.route('/')
     {
         const decoded = jwt.verify(token, JWT_SECRET_KEY)
         data.user = decoded.uname
+        data.orderby = `ORDER BY ((lat-${decoded.lat})*(lat-${decoded.lat})) + ((lng - ${decoded.lng})*(lng - ${decoded.lng})) ASC`
     }catch(err){}
 
     userModel.getUsers(data, (result) => {
@@ -60,7 +61,7 @@ router.route('/')
 	
 		const startIndex = (page - 1) * limit
         const endIndex = page * limit
-	
+
 		if (page && limit)
             result = result.slice(startIndex, endIndex)
 
@@ -82,34 +83,6 @@ router.route('/:userId')
     userModel.getUserById(id, (result) => {
         res.status(200).json(result)
     })
-})
-
-// Messages route
-router.route('/:userId/messages')
-.get((req, res, next) => {
-    res.status(200).json('GET: Messages')
-})
-.post((req, res, next) => {
-    res.status(200).json('POST: Message')
-})
-
-router.route('/:userId/messages/:messageId')
-.delete((req, res, next) => {
-    res.status(200).json('DELETE: Message')
-})
-
-// Notifications route
-router.route('/:userId/notifications')
-.get((req, res, next) => {
-    res.status(200).json('GET: Notifications')
-})
-.post((req, res, next) => {
-    res.status(200).json('POST: Notifictaions')
-})
-
-router.route('/:userId/notifications/:notificationId')
-.delete((req, res, next) => {
-    res.status(200).json('DELETE: Notification')
 })
 
 module.exports = router

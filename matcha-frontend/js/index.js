@@ -79,9 +79,10 @@ async function displayUsers(usersList){
 
             const userInfo = document.createElement('div')
             userInfo.setAttribute('class', 'user-info')
-            userInfo.innerHTML = `<h2>${user.uname}</h2>
-                                 <p>${user.bio}</p>
-                                 <h3>Interests</h3>`
+            userInfo.innerHTML = `<h2>${user.uname} ~ ${getAge(user.dob)}</h2>
+                                  <h3>${(user.gender == 'M')?'Male':'Female'}</h3>
+                                  <p>${user.bio}</p>
+                                  <h3>Interests</h3>`
             
             const interestsEl = document.createElement('ul')
             interestsEl.setAttribute('class', 'interests')
@@ -91,7 +92,24 @@ async function displayUsers(usersList){
                 interestsEl.appendChild(interestEl)
             })
             userInfo.appendChild(interestsEl)
+
+            const userImages = `${user.image1},${user.image2},${user.image3},${user.image4},${user.image5}`.split(',')
+            const imagesTitle = document.createElement('h3')
+            const imagesEl = document.createElement('ul')
             
+            imagesTitle.innerText = 'Images'
+            userInfo.appendChild(imagesTitle)
+
+            imagesEl.setAttribute('class', 'images')
+            userImages.forEach(function(image){
+                if(image != 'null'){
+                    const imageEl = document.createElement('li')
+                    imageEl.innerHTML = `<img src="${image}" width="100%">`
+                    imagesEl.appendChild(imageEl)
+                }
+            })
+            userInfo.appendChild(imagesEl)
+
             modalContant.appendChild(userInfo)
         })
 

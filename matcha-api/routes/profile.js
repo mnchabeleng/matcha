@@ -4,6 +4,14 @@ const router = express.Router()
 const validate = require('../helpers/validate')
 const userModel = require('../models/user')
 const bcrypt = require('bcrypt')
+const { v4: uuidv4 } = require('uuid')
+const imgUpload = require('express-fileupload')
+const dotenv = require('dotenv').config()
+const {
+    ROOT_URL
+} = process.env
+
+router.use(imgUpload())
 
 router.get('/:id', (req, res, next) => {
     const id = req.params.id
@@ -33,6 +41,8 @@ router.put('/location', (req, res, next) => {
             lng: body.location.lng
         }
         userModel.updateLocation(data, (result) => {
+            req.tokenData.lat = data.lat
+            req.tokenData.lng = data.lng
             res.status(200).json({status:true, message:'Location has been updated'})
         })
     }
@@ -120,7 +130,50 @@ router.put('/password', (req, res, next) => {
 })
 
 router.put('/images/:id', (req, res, next) => {
+    const validations = {}
+    const col = 'image' + req.params.id
+    const body = {
+        id: req.tokenData.id,
+        col: col,
+        image: (req.files)?req.files.image:null
+    }
 
+    validations.image = validate.image(body.image,{
+        type:'Only .png, .jpg and .jpeg format allowed',
+        size:'Max image file size is 1mb',
+        required:'Select an image to upload'
+    })
+
+    if(validations.image != false){
+        res.status(200).json({status: false,validation: true,messages: validations})
+    }else{
+        const image = body.image
+        let imageExt = ''
+        if(image.mimetype == 'image/png')
+            imageExt = 'png'
+        if(image.mimetype == 'image/jpg')
+            imageExt = 'jpg'
+        if(image.mimetype == 'image/jpeg')
+            imageExt = 'jpeg'
+        image.name = uuidv4() + '.' + imageExt
+        const imgSrc = 'img/' + image.name
+        const data = {
+            id: body.id,
+            col: body.col,
+            image: ROOT_URL + imgSrc
+        }
+        image.mv(imgSrc, (err) => {
+            if(err){
+                const error = new Error(err.message)
+                error.status = 500
+                next(error)
+            }else{
+                userModel.updateImages(data, (result) => {
+                    res.status(200).json({status:true, image:data.image,message:'Image uploaded'})
+                })
+            }
+        })
+    }
 })
 
 module.exports = router

@@ -39,6 +39,7 @@ app.use('/messages', verifyAuth, require('./routes/messages'))
 app.use('/notifications', verifyAuth, require('./routes/notifications'))
 app.use('/messages', require('./routes/messages'))
 app.use('/matches', verifyAuth, require('./routes/matches'))
+app.use('/cities', require('./routes/cities'))
 
 // error handling
 app.use((req, res, next)=>{

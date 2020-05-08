@@ -2,6 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
+const { v4: uuidv4 } = require('uuid')
 const imgUpload = require('express-fileupload')
 const validate = require('../helpers/validate')
 const userModel = require('../models/user')
@@ -129,7 +130,7 @@ router.post('/', (req, res, next) => {
                 imageExt = 'jpg'
             if(image.mimetype == 'image/jpeg')
                 imageExt = 'jpeg'
-            image.name = `${body.username}_profile_image.${imageExt}`
+            image.name = uuidv4() + '.' + imageExt
             const imgSrc = 'img/' + image.name
             const data = {
                 uname: body.username,

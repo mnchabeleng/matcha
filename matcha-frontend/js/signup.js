@@ -1,6 +1,7 @@
 'use strict'
 document.title = 'Signup'
-const citiesURL = 'data/cities.json'
+//const citiesURL = 'data/cities.json'
+const citiesURL = 'http://localhost:3300/cities/'
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
@@ -59,7 +60,7 @@ async function searchCities(searchQuery){
 
     lat.value = ''
     lng.value = ''
-    const cities = await fetch(citiesURL).then(res => res.json())
+    const cities = await fetch(citiesURL + `?q=${encodeURIComponent(searchQuery)}`).then(res => res.json())
     
     let matches = cities.filter(function(city){
         const regex = new RegExp(`^${searchQuery}`, 'gi')
@@ -87,25 +88,24 @@ async function searchCities(searchQuery){
     }
 }
 
-const signupURL = 'localhost:3300/signup/'
+const signupURL = 'http://localhost:3300/signup/'
 function signup(){
     const signupForm = document.querySelector('.signup-form')
     signupForm.addEventListener('submit', function(e){
         e.preventDefault()
-        fetch('http://localhost:3300/signup/',{
+        fetch(signupURL,{
             method: 'POST',
             body: new FormData(this)
         }).then(function(res){
             return res.json()
         }).then(function(data){
-            console.log(data)
             if(data.status == false && data.validation == true){
                 validate(data.messages)
             }else if(data.status == true){
                 clearFormErrors()
                 displaySuccess({message:data.message,class:'#signup-response'})
+                signupForm.reset()
             }
-            //signupForm.reset()
         })
     })
 }

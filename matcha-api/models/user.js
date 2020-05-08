@@ -1,6 +1,6 @@
 'use strict'
 const db = require('../db/connect')
-const userRows = 'id, uname, email, fname, lname, bio, dob, gender, image,lat, lng, city, interests'
+const userRows = 'id, uname, email, fname, lname, bio, dob, gender, image,lat, lng, city, interests, image1, image2, image3, image4, image5'
 
 exports.getUsers = (data, callback) => {
     const user = data.user
@@ -97,5 +97,9 @@ exports.updatePassword = (data, callback) => {
 }
 
 exports.updateImages = (data, callback) => {
-    
+    const query = `UPDATE users SET ${data.col} = ? WHERE id = ?`
+    db.query(query, [data.image, data.id], (err, res) => {
+        if(err) throw err
+        callback(res)
+    })
 }
