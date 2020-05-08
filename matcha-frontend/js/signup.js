@@ -57,6 +57,8 @@ async function searchCities(searchQuery){
     const lat = document.querySelector('#lat')
     const lng = document.querySelector('#lng')
 
+    lat.value = ''
+    lng.value = ''
     const cities = await fetch(citiesURL).then(res => res.json())
     
     let matches = cities.filter(function(city){
@@ -96,6 +98,7 @@ function signup(){
         }).then(function(res){
             return res.json()
         }).then(function(data){
+            console.log(data)
             if(data.status == false && data.validation == true){
                 validate(data.messages)
             }else if(data.status == true){

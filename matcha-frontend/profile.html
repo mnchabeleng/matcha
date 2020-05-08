@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="vendor/autocomplete/dist/css/fuzzycomplete.min.css">
     <link rel="stylesheet" href="vendor/amsify/css/amsify.suggestags.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
@@ -49,7 +48,7 @@
                             <form id="location-form">
                                 <div id="location-response"></div>
                                 <label>Location:</label>
-                                <input type="text" name="location" id="location">
+                                <input type="text" name="location" id="location" autocomplete="off">
                                 <div class="suggestion-list"></div>
                                 <input type="text" name="lat" id="lat" hidden>
                                 <input type="text" name="lng" id="lng" hidden>
@@ -84,12 +83,21 @@
                         <div class="content">
                             <form id="password-form">
                                 <div id="password-response"></div>
-                                <label>Old password:</label>
-                                <input type="password" id="password-old" placeholder="Old password">
-                                <label>Password:</label>
-                                <input type="password" id="password" placeholder="Password">
-                                <label>Re-enter password:</label>
-                                <input type="password" id="password-repeat" placeholder="Re-enter password">
+                                <div class="password-old">
+                                    <label>Old password:</label>
+                                    <input type="password" id="password-old" placeholder="Old password">
+                                    <div class="error"></div>
+                                </div>
+                                <div class="password">
+                                    <label>Password:</label>
+                                    <input type="password" id="password" placeholder="Password">
+                                    <div class="error"></div>
+                                </div>
+                                <div class="password-repeat">
+                                    <label>Re-enter password:</label>
+                                    <input type="password" id="password-repeat" placeholder="Re-enter password">
+                                    <div class="error"></div>
+                                </div>
                                 <button type="submit">Update password</button>
                             </form>
                         </div>
@@ -109,30 +117,9 @@
         <div class="footer"></div>
     </div>
     <script defer src="vendor/jquery/jquery.min.js"></script>
-    <script defer src="vendor/autocomplete/example/fuse.min.js"></script>
-    <script defer src="vendor/autocomplete/dist/js/fuzzycomplete.min.js"></script>
     <script defer src="vendor/amsify/js/jquery.amsify.suggestags.js"></script>
     <script defer src="js/auth.js"></script>
     <script defer src="js/response.js"></script>
     <script defer src="js/profile.js"></script>
-    <script>
-        var companies = [
-            {"companyName":"Aperture Science"},
-            {"companyName":"MomCorp"},
-            {"companyName":"Wayne Enterprises"},
-            {"companyName":"Umbrella Corp"},
-            {"companyName":"Gringotts"},
-            {"companyName":"Globex"}
-        ];
-
-        var airports = [
-            {"airportCode":"MEL","cityName":"Melbourne, Australia"},
-            {"airportCode":"LAX","cityName":"Los Angeles, USA"},
-            {"airportCode":"LHR","cityName":"Heathrow, London"},
-            {"airportCode":"HKG","cityName":"Hong Kong"},
-            {"airportCode":"NRT","cityName":"Narita, Tokyo, Japan"},
-            {"airportCode":"FRA","cityName":"Frankfurt, Germany"}
-        ];
-    </script>
 </body>
 </html>

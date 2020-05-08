@@ -2,6 +2,12 @@
 const userURL = 'http://localhost:3300/profile/'
 const citiesURL = 'data/cities.json'
 
+const updateLocationURL = 'http://localhost:3300/profile/location/'
+const updateInterestsURL = 'http://localhost:3300/profile/interests/'
+const updateBioURL = 'http://localhost:3300/profile/bio/'
+const updatePasswordURL = 'http://localhost:3300/profile/password/'
+const updateImagesURL = 'http://localhost:3300/profile/images/'
+
 async function loadProfile(){
     const auth = await getAuthData()
     if (auth.status === true)
@@ -49,15 +55,17 @@ function handleInfo(user){
     dob.innerText = user.dob.split('T')[0]
 }
 
-const updateLocationURL = 'http://localhost:3300/profile/location/'
 function handleLocation(user){
     const locationForm = document.querySelector('#location-form')
     const userLocation = document.querySelector('#location')
     const lat = document.querySelector('#lat')
     const lng = document.querySelector('#lng')
-    const fuseOptions = { keys: ["airportCode", "cityName"] }
-    const options = { display: "cityName", key: "airportCode", fuseOptions: fuseOptions }
-    $(userLocation).fuzzyComplete(airports, options)
+
+    userLocation.addEventListener('input', function(){
+        suggestions.appendChild(cityList)
+        cityList.innerHTML = ''
+        searchCities(this.value)
+    })
 
     userLocation.value = user.city
     lat.value = user.lat
@@ -81,12 +89,6 @@ function handleLocation(user){
                 displaySuccess({message: data.message, class: '#location-response'})
         })
     })
-
-    userLocation.addEventListener('input', function(){
-        suggestions.appendChild(cityList)
-        cityList.innerHTML = ''
-        searchCities(this.value)
-    })
 }
 
 const suggestions = document.querySelector('.suggestion-list')
@@ -97,6 +99,8 @@ async function searchCities(searchQuery){
     const lat = document.querySelector('#lat')
     const lng = document.querySelector('#lng')
 
+    lat.value = ''
+    lng.value = ''
     const cities = await fetch(citiesURL).then(res => res.json())
     
     let matches = cities.filter(function(city){
@@ -128,15 +132,26 @@ async function searchCities(searchQuery){
 function handleInterests(user){
     const interestsForm = document.querySelector('#interests-form')
     const interests = document.querySelector('#interests')
+    interests.value = user.interests
     $('input[name="interests"]').amsifySuggestags({type : 'amsify'})
 
     interestsForm.addEventListener('submit', function(e){
         e.preventDefault()
-        if(interests.value){
-            displaySuccess({message: 'Interests has been updated', class: '#interests-reponse'})
-        }
-        else
-            displayErrors({message: 'Missing input(s)', class: '#interests-reponse'})
+        fetch(updateInterestsURL, {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({interests:interests.value})    
+        }).then(function(res){
+                return res.json()
+        }).then(function(data){
+            if(data.status == false && data.validation == true)
+                displayErrors({message: data.message.interests, class: '#interests-reponse'})
+            else if(data.status == true)
+                displaySuccess({message: data.message, class: '#interests-reponse'})
+        })
     })
 }
 
@@ -148,11 +163,21 @@ function handleBio(user){
 
     bioForm.addEventListener('submit', function(e){
         e.preventDefault()
-        if(bio.value){
-            displaySuccess({message: 'Bio has been updated', class: '#bio-response'})
-        }
-        else
-            displayErrors({message: 'Missing input(s)', class: '#bio-response'})
+        fetch(updateBioURL, {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({bio:bio.value})    
+        }).then(function(res){
+                return res.json()
+        }).then(function(data){
+            if(data.status == false && data.validation == true)
+                displayErrors({message: data.message.bio, class: '#bio-response'})
+            else if(data.status == true)
+                displaySuccess({message: data.message, class: '#bio-response'})
+        })
     })
 }
 
@@ -164,11 +189,54 @@ function handlePassword(){
 
     passwordForm.addEventListener('submit', function(e){
         e.preventDefault()
-        if(passwordOld.value && password.value && passwordRepeat){
-            displaySuccess({message: 'Password has been updated', class: '#password-response'})
-            this.reset()
-        }
-        else
-            displayErrors({message: 'Missing input(s)', class: '#password-response'})
+        fetch(updatePasswordURL, {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({password_old:passwordOld.value, password:password.value, password_repeat:passwordRepeat.value})    
+        }).then(function(res){
+                return res.json()
+        }).then(function(data){
+            if(data.status == false && data.validation == true){
+                validatePassword(data.message)
+            }else if(data.status == false){
+                clearPasswordErrors()
+                displayErrors({message: data.message, class: '#password-response'})
+            }else if(data.status == true){
+                passwordForm.reset()
+                clearPasswordErrors()
+                displaySuccess({message: data.message, class: '#password-response'})
+            }
+        })
     })
+}
+
+function clearPasswordErrors(){
+    const passwordErrors = document.querySelectorAll('.error')
+    passwordErrors.forEach(function(errorEl){
+        errorEl.innerText = ''
+    })
+}
+
+function validatePassword(validation){
+    const passwordOld = document.querySelector('.password-old .error')
+    const password = document.querySelector('.password .error')
+    const passwordRepeat = document.querySelector('.password-repeat .error')
+
+    if(validation.password_old)
+        passwordOld.innerText = validation.password_old
+    else
+        passwordOld.innerText = ''
+
+    if(validation.password)
+        password.innerText = validation.password
+    else
+        password.innerText = ''
+
+    if(validation.password_repeat)
+        passwordRepeat.innerText = validation.password_repeat
+    else
+        passwordRepeat.innerText = ''
 }

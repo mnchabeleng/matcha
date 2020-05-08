@@ -39,32 +39,61 @@ exports.getUserByEmail = (email, callback) => {
     })
 }
 
+exports.getPassword = (id, callback) => {
+    const query = 'SELECT pass FROM users WHERE id = ?'
+    db.query(query, [id], (err, res) => {
+        if(err) throw err
+        callback(res[0])
+    })
+}
+
 exports.updateModifyDate = (callback) => {
     const query = 'UPDATE users SET modify_date = current_timestamp'
-    db.query(query, (err, result) => {
+    db.query(query, (err, res) => {
         if (err) throw err.message
-        callback(result)
+        callback(res)
     })
 }
 
 exports.createUser = (data, callback) => {
-    const userData = []
+    const userData = [data.uname, data.email, data.fname, data.lname, data.bio, data.dob, data.gender, data.pass, data.image, data.lat, data.lng, data.city, data.interests]
     const query = 'INSERT INTO users(uname, email, fname, lname, bio, dob, gender, pass, image, lat, lng, city, interests) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-    db.query(query, data, (err, res) => {
-        
+    db.query(query, userData, (err, res) => {
+        if(err) throw err
+        callback(res)
     })
 }
 
 exports.updateLocation = (data, callback) => {
-
+    const query = 'UPDATE users SET city = ?, lat = ?, lng = ? WHERE id = ?'
+    db.query(query, [data.city, data.lat, data.lng, data.id], (err, res) => {
+        if(err) throw err
+        callback(res)
+    })
 }
 
 exports.updateInterests = (data, callback) => {
+    const query = 'UPDATE users SET interests = ? WHERE id = ?'
+    db.query(query, [data.interests, data.id], (err, res) => {
+        if(err) throw err
+        callback(res)
+    })
+}
 
+exports.updateBio = (data, callback) => {
+    const query = 'UPDATE users SET bio = ? WHERE id = ?'
+    db.query(query, [data.bio, data.id], (err, res) => {
+        if(err) throw err
+        callback(res)
+    })
 }
 
 exports.updatePassword = (data, callback) => {
-
+    const query = 'UPDATE users SET pass = ? WHERE id = ?'
+    db.query(query, [data.pass, data.id], (err, res) => {
+        if(err) throw err
+        callback(res)
+    })
 }
 
 exports.updateImages = (data, callback) => {

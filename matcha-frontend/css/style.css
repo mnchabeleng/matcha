@@ -67,6 +67,11 @@ body{
     box-shadow: inset 0px 0px 5px 0px rgba(255,0,0,1);
 }
 
+.error{
+    color: rgba(255, 0, 0, 0.8);
+    display: block;
+}
+
 .success{
     border: 1px solid #33e72d;
     background-color: #bbeeba;

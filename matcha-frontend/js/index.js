@@ -75,13 +75,23 @@ async function displayUsers(usersList){
             profileImg.style.backgroundImage = `url(${user.image})`
             modalContant.appendChild(profileImg)
 
+            const interests = user.interests.split(',')
+
             const userInfo = document.createElement('div')
             userInfo.setAttribute('class', 'user-info')
             userInfo.innerHTML = `<h2>${user.uname}</h2>
                                  <p>${user.bio}</p>
-                                 <h3>Interests</h3>
-                                 <p>${user.interests}</p>
-                                 <h3>Images</h3>`
+                                 <h3>Interests</h3>`
+            
+            const interestsEl = document.createElement('ul')
+            interestsEl.setAttribute('class', 'interests')
+            interests.forEach(function(interest){
+                const interestEl = document.createElement('li')
+                interestEl.innerText = interest
+                interestsEl.appendChild(interestEl)
+            })
+            userInfo.appendChild(interestsEl)
+            
             modalContant.appendChild(userInfo)
         })
 

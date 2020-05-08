@@ -5,6 +5,10 @@ const bcrypt = require('bcrypt')
 const imgUpload = require('express-fileupload')
 const validate = require('../helpers/validate')
 const userModel = require('../models/user')
+const dotenv = require('dotenv').config()
+const {
+    ROOT_URL
+} = process.env
 
 router.use(imgUpload())
 
@@ -52,7 +56,7 @@ router.post('/', (req, res, next) => {
     })
 
     validations.location = validate.location(body.location, {
-        required: 'Select a location'
+        required: 'Select a location from the list'
     })
 
     validations.gender = validate.gender(body.gender, {
@@ -69,12 +73,12 @@ router.post('/', (req, res, next) => {
     })
     validations.password = validate.password(body.password, body.password_repeat, {
         required: 'Password required',
-        invalid: 'password should be at least 4 characters in length and should include at least one upper case letter, one number, and one special character',
+        invalid: 'Password should be at least 4 characters in length and should include at least one upper case letter, one number, and one special character',
         match: 'Password match error'
     })
     validations.password_repeat = validate.password_repeat(body.password, body.password_repeat, {
         required: 'Confirm password',
-        invalid: 'password should be at least 4 characters in length and should include at least one upper case letter, one number, and one special character',
+        invalid: 'Password should be at least 4 characters in length and should include at least one upper case letter, one number, and one special character',
         match: 'Password match error'
     })
 
@@ -117,25 +121,44 @@ router.post('/', (req, res, next) => {
                     messages: validations
                 })
         }else{
+            const image = body.image
+            let imageExt = ''
+            if(image.mimetype == 'image/png')
+                imageExt = 'png'
+            if(image.mimetype == 'image/jpg')
+                imageExt = 'jpg'
+            if(image.mimetype == 'image/jpeg')
+                imageExt = 'jpeg'
+            image.name = `${body.username}_profile_image.${imageExt}`
+            const imgSrc = 'img/' + image.name
             const data = {
-                username: body.username,
+                uname: body.username,
                 email: body.email,
-                fname: body.first_name,
-                lname: body.last_name,
+                fname: validate.capitalize(body.first_name),
+                lname: validate.capitalize(body.last_name),
                 city: req.body.location,
                 lat: req.body.lat,
                 lng: req.body.lng,
                 gender: req.body.gender,
-                image: (req.files)?req.files.image:null,
-                dob: `${req.body.day}-${req.body.month}-${req.body.year}`,
-                interests: JSON.stringify(req.body.interests.split(',')),
+                image: ROOT_URL + imgSrc,
+                dob: `${req.body.year}-${req.body.month}-${req.body.day}`,
+                interests: req.body.interests,
                 bio: req.body.bio.replace(/<\/?[^>]+(>|$)/g, ""),
-                password: bcrypt.hashSync(req.body.password, 10)
+                pass: bcrypt.hashSync(req.body.password, 10)
             }
-            console.log(data)
-            res.status(200).json({
-                status: true,
-                message: 'Account created, you may login'
+            image.mv(imgSrc, (err) => {
+                if(err){
+                    const error = new Error(err.message)
+                    error.status = 500
+                    next(error)
+                }else{
+                    userModel.createUser(data, (result) => {
+                        res.status(200).json({
+                            status: true,
+                            message: 'Account created, you may login'
+                        })
+                    })
+                }
             })
         }
     })

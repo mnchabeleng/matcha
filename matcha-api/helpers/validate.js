@@ -48,6 +48,13 @@ exports.location = (locaction, messages) => {
     return messages.required
 }
 
+exports.password_old = (password_old, messages) => {
+    if (!password_old || password_old == '')
+        return messages.required
+    
+    return false
+}
+
 exports.password = (password, password_repeat, messages) => {
     const reg = regex.password
 

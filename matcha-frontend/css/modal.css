@@ -55,6 +55,22 @@
 .modal-content .message-form .alert{
   margin-top: 10px;
 }
+
+.modal-content ul.interests{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content ul.interests li{
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+  color: #ffffff;
+  border: 1px solid #00aced;
+  background-color: #00aced;
+  border-radius: 3px;
+}
   
 .close {
   color: #aaa;

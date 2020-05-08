@@ -25,11 +25,6 @@ body{
     padding: 5px 0;
 }
 
-.signup .error{
-    color: rgba(255, 0, 0, 0.8);
-    display: block;
-}
-
 @media(min-width: 600px){
     .signup{
         display: grid;

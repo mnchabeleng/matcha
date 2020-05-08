@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const path = require('path')
 
 const port = 3300
 app.listen(port, () => {
@@ -9,9 +10,6 @@ app.listen(port, () => {
 // body parser built into express
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// static files
-app.use('/img', express.static('uploads'));
 
 // cors hanlding
 app.use((req, res, next)=>{
@@ -25,6 +23,9 @@ app.use((req, res, next)=>{
     }
     next()
 })
+
+// static files
+app.use('/img', express.static('img'))
 
 const verifyAuth = require('./middleware/verify_auth')
 // api routes
