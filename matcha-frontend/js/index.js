@@ -5,6 +5,7 @@ document.title = pageTitle
 const usersURL = 'http://localhost:3300/users/'
 const notificationsURL = 'http://localhost:3300/notifications'
 const likesURL = 'http://localhost:3300/likes/'
+const citiesURL = 'http://localhost:3300/cities/'
 
 let page = 1
 const limit = 9

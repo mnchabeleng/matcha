@@ -32,26 +32,30 @@
         </div>
     </div>
     <div class="container">
-        <div class="filters">
-            <div class="order">
-                <select id="order">
-                    <option value="">Order by</option>
-                    <option value="ageDESC">Age, Young to old</option>
-                    <option value="ageASC">Age, Old to young</option>
-                    <option value="likesDESC">Likes</option>
-                    <option value="viewsDESC">Views</option>
-                </select>
+        <section class="filters-section">
+            <div class="filters">
+                <div class="order">
+                    <select id="order">
+                        <option value="">Order by</option>
+                        <option value="ageDESC">Age, Young to old</option>
+                        <option value="ageASC">Age, Old to young</option>
+                        <option value="likesDESC">Likes</option>
+                        <option value="viewsDESC">Views</option>
+                    </select>
+                </div>
+                <div class="gender">
+                    <label><input type="checkbox" id="male"> Male</label>
+                    <label><input type="checkbox" id="female"> Female</label>
+                </div>
+                <div class="age">
+                    <div class="age-range-slider"></div>
+                </div>
+                <div class="city">
+                    <input type="text" id="location" placeholder="Location" autocomplete="off">
+                </div>
+                <div class="btn"><button class="update-query"></button></div>
             </div>
-            <div class="gender">
-                <label><input type="checkbox" id="male"> Male</label>
-                <label><input type="checkbox" id="female"> Female</label>
-            </div>
-            <div class="age">
-                <div class="age-range-slider"></div>
-            </div>
-            <div class="city"><input type="text" id="location" placeholder="Location" autocomplete="off"></div>
-            <div class="btn"><button class="update-query"></button></div>
-        </div>
+        </section>
         <section class="users-section">
             <div class="users"></div>
             <button class="load-more"></button>

@@ -1,6 +1,5 @@
 'use strict'
 document.title = 'Signup'
-//const citiesURL = 'data/cities.json'
 const citiesURL = 'http://localhost:3300/cities/'
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

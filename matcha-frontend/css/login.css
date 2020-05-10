@@ -59,15 +59,3 @@ button:hover{
 button::-moz-focus-inner {
     border: 0;
 }
-
-.footer{
-    text-align: center;
-    height: 80px;
-    line-height: 80px;
-    background-color: #323c40;
-    color: #ffffff;
-}
-
-.footer::after {
-    content: "Hello World!";
-}
