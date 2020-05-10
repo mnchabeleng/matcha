@@ -1,6 +1,6 @@
 'use strict'
 document.title = 'Login'
-const loginUrl = 'http://loacalhost:3300/login'
+const loginUrl = 'http://localhost:3300/login/'
 
 async function loadLogin(){
     const auth = await getAuthData()
@@ -26,7 +26,7 @@ function login(){
 }
 
 function verifyEmailAndPassword(body){
-    fetch('http://localhost:3300/login',{
+    fetch(loginUrl,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

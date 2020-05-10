@@ -22,11 +22,6 @@ function getUsers(){
     fetch(matchURL,{
         headers: {'Authorization': 'Bearer ' + token}
     }).then(res => res.json()).then((data) => {
-        if (data.length < 9)
-            loadMore.style.display = 'none'
-        else
-            loadMore.style.display = 'block'
-    
         displayUsers(data)
     })
 }
@@ -48,6 +43,14 @@ async function displayUsers(usersList){
         cardBodyElement.innerHTML = `<p>${user.gender}</p>
                                     <p>${user.uname} ~ ${getAge(user.dob)}</p>
                                     <p>${user.city}</p>`
+
+        let viewsCount = user.views
+        let likesCount = user.likes
+
+        const viewsEl = document.createElement('p')
+        viewsEl.innerHTML = `<img src="img/view.svg" height="30" width="30" alt="View" style="margin-bottom:-8px" /> ${viewsCount} views
+                             <img src="img/heart.svg" height="20" width="20" alt="View" style="margin-bottom:-5px" /> ${likesCount} likes`
+        cardBodyElement.appendChild(viewsEl)
 
         cardElement.appendChild(blockUserElement)
         cardElement.appendChild(cardBodyElement)
@@ -105,7 +108,9 @@ function sendMessage(reciever, message){
         },
         body: JSON.stringify({reciever, message})      
     }).then(function(res){
-        displaySuccess({message: 'A message was sent to ' + reciever + '.'})
+        return res.json()
+    }).then(function(data){
+        displaySuccess({message: data.message})
     })
 }
 
@@ -133,11 +138,3 @@ function getAge(dateString){
         age--
     return age
 }
-
-// Load more users
-const loadMore = document.querySelector('.load-more')
-loadMore.innerText = 'Load More'
-loadMore.addEventListener('click', function(){
-    page++
-    getUsers()
-})

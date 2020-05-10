@@ -9,14 +9,10 @@ exports.createMessage = (data, callback) => {
     })
 }
 
-exports.getUsers = (data, callback) => {
-    const query = 'SELECT sender, reciever FROM messages WHERE sender = ? OR reciever = ?'
-    db.query(query, [data.admin, data.admin], (err, res) => {
+exports.getMessages = (data, callback) => {
+    const query = 'SELECT * FROM messages WHERE (sender = ? AND reciever = ?) OR (sender = ? AND reciever = ?)'
+    db.query(query, [data.admin, data.user, data.user, data.admin], (err, res) => {
         if(err) throw err
         callback(res)
     })
-}
-
-exports.getMessages = (data, callback) => {
-    const query = ''
 }

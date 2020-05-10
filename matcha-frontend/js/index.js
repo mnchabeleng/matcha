@@ -2,7 +2,9 @@
 
 const pageTitle = 'Matcha' 
 document.title = pageTitle
-const matchaAPI = 'http://localhost:3300/'
+const usersURL = 'http://localhost:3300/users/'
+const notificationsURL = 'http://localhost:3300/notifications'
+const likesURL = 'http://localhost:3300/likes/'
 
 let page = 1
 const limit = 9
@@ -11,6 +13,7 @@ let gender = ''
 let city = ''
 let min = 18
 let max = 100
+let userInterest = ''
 
 async function loadUsers(){
     getUsers()
@@ -18,8 +21,8 @@ async function loadUsers(){
 loadUsers()
 
 function getUsers(){    
-    const queries = `page=${page}&limit=${limit}&orderby=${orderBy}&gender=${gender}&min=${min}&max=${max}&city=${city}`
-    fetch(matchaAPI + 'users' + '?' + queries,{
+    const queries = `page=${page}&limit=${limit}&orderby=${orderBy}&gender=${gender}&min=${min}&max=${max}&city=${city}&interest=${userInterest}`
+    fetch(usersURL + '?' + queries,{
         headers: {'Authorization': 'Bearer ' + token}
     }).then(res => res.json()).then((data) => {
         if (data.length < 9)
@@ -54,63 +57,100 @@ async function displayUsers(usersList){
         const cardElement = document.createElement('div')
         cardElement.setAttribute('class', 'card')
         cardElement.style.backgroundImage = `url(${user.image})`
-        
+
         const cardBodyElement = document.createElement('div')
         cardBodyElement.setAttribute('class', 'card-body')
         cardBodyElement.innerHTML = `<p>${user.gender}</p>
                                     <p>${user.uname} ~ ${getAge(user.dob)}</p>
                                     <p>${user.city}</p>`
 
+        let viewsCount = user.views
+        let likesCount = user.likes
+
+        const viewsEl = document.createElement('p')
+        viewsEl.innerHTML = `<img src="img/view.svg" height="30" width="30" alt="View" style="margin-bottom:-8px" /> ${viewsCount} views
+                             <img src="img/heart.svg" height="20" width="20" alt="View" style="margin-bottom:-5px" /> ${likesCount} likes`
+        cardBodyElement.appendChild(viewsEl)
+
         cardElement.appendChild(cardBodyElement)
         usersElement.appendChild(cardElement)
 
         cardElement.addEventListener('click', function(){
-            document.getElementById("myModal").style.display = "block";
+            if (auth.status === true){
+                
+                fetch(notificationsURL,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({type:'View', reciever:user.uname})
+                })
 
-            const modalContant = document.querySelector('.modal-container')
-            modalContant.innerHTML = ''
+                fetch(usersURL + user.id + '/views',{
+                    method: 'POST',
+                    headers: {'Authorization': 'Bearer ' + token}
+                }).then(res => res.json()).then((data) => {
+                    viewsCount = viewsCount + 1
+                    viewsEl.innerHTML = `<img src="img/view.svg" height="30" width="30" alt="View" style="margin-bottom:-8px" /> ${viewsCount} views
+                                        <img src="img/heart.svg" height="20" width="20" alt="View" style="margin-bottom:-5px" /> ${likesCount} likes`
+                })
 
-            const profileImg = document.createElement('div')
-            profileImg.setAttribute('class', 'profile-img')
-            profileImg.style.backgroundImage = `url(${user.image})`
-            modalContant.appendChild(profileImg)
+                document.getElementById("myModal").style.display = 'block'
 
-            const interests = user.interests.split(',')
-
-            const userInfo = document.createElement('div')
-            userInfo.setAttribute('class', 'user-info')
-            userInfo.innerHTML = `<h2>${user.uname} ~ ${getAge(user.dob)}</h2>
-                                  <h3>${(user.gender == 'M')?'Male':'Female'}</h3>
-                                  <p>${user.bio}</p>
-                                  <h3>Interests</h3>`
-            
-            const interestsEl = document.createElement('ul')
-            interestsEl.setAttribute('class', 'interests')
-            interests.forEach(function(interest){
-                const interestEl = document.createElement('li')
-                interestEl.innerText = interest
-                interestsEl.appendChild(interestEl)
-            })
-            userInfo.appendChild(interestsEl)
-
-            const userImages = `${user.image1},${user.image2},${user.image3},${user.image4},${user.image5}`.split(',')
-            const imagesTitle = document.createElement('h3')
-            const imagesEl = document.createElement('ul')
-            
-            imagesTitle.innerText = 'Images'
-            userInfo.appendChild(imagesTitle)
-
-            imagesEl.setAttribute('class', 'images')
-            userImages.forEach(function(image){
-                if(image != 'null'){
-                    const imageEl = document.createElement('li')
-                    imageEl.innerHTML = `<img src="${image}" width="100%">`
-                    imagesEl.appendChild(imageEl)
-                }
-            })
-            userInfo.appendChild(imagesEl)
-
-            modalContant.appendChild(userInfo)
+                const modalContant = document.querySelector('.modal-container')
+                modalContant.innerHTML = ''
+    
+                const profileImg = document.createElement('div')
+                profileImg.setAttribute('class', 'profile-img')
+                profileImg.style.backgroundImage = `url(${user.image})`
+                modalContant.appendChild(profileImg)
+    
+                const interests = user.interests.split(',')
+    
+                const userInfo = document.createElement('div')
+                userInfo.setAttribute('class', 'user-info')
+                userInfo.innerHTML = `<h2>${user.uname} ~ ${getAge(user.dob)}</h2>
+                                      <h3>${(user.gender == 'M')?'Male':'Female'}</h3>
+                                      <p>${user.bio}</p>
+                                      <h3>Interests</h3>`
+                
+                const interestsEl = document.createElement('ul')
+                interestsEl.setAttribute('class', 'interests')
+                interests.forEach(function(interest){
+                    const interestEl = document.createElement('li')
+                    interestEl.innerText = interest
+                    interestsEl.appendChild(interestEl)
+                    interestEl.addEventListener('click', function(e){
+                        userInterest = interest
+                        document.getElementById("myModal").style.display = 'none'
+                        document.querySelector('.users').innerHTML = ''
+                        getUsers()
+                    })
+                })
+                userInfo.appendChild(interestsEl)
+    
+                const userImages = `${user.image1},${user.image2},${user.image3},${user.image4},${user.image5}`.split(',')
+                const imagesTitle = document.createElement('h3')
+                const imagesEl = document.createElement('ul')
+                
+                imagesTitle.innerText = 'Images'
+                userInfo.appendChild(imagesTitle)
+    
+                imagesEl.setAttribute('class', 'images')
+                userImages.forEach(function(image){
+                    if(image != 'null'){
+                        const imageEl = document.createElement('li')
+                        imageEl.innerHTML = `<img src="${image}" width="100%">`
+                        imagesEl.appendChild(imageEl)
+                    }
+                })
+                userInfo.appendChild(imagesEl)
+    
+                modalContant.appendChild(userInfo)
+            }
+            else
+                window.location = 'login.html'
         })
 
         if (auth.status === true)
@@ -122,13 +162,20 @@ async function displayUsers(usersList){
             
             likeElement.addEventListener('click', function(e){
                 e.stopPropagation()
-                const notificationsURL = `http://localhost:3300/likes/${user.uname}`
-                fetch(notificationsURL,{
+                fetch(likesURL + user.uname,{
                     method: 'POST',
                     headers: {'Authorization': 'Bearer ' + token}
                 })
-                //cardElement.style.display = 'none'
                 this.style.display = 'none'
+
+                fetch(usersURL + user.id + '/likes',{
+                    method: 'POST',
+                    headers: {'Authorization': 'Bearer ' + token}
+                }).then(res => res.json()).then((data) => {
+                    likesCount = likesCount + 1
+                    viewsEl.innerHTML = `<img src="img/view.svg" height="30" width="30" alt="View" style="margin-bottom:-8px" /> ${viewsCount} views
+                                        <img src="img/heart.svg" height="20" width="20" alt="View" style="margin-bottom:-5px" /> ${likesCount} likes`
+                })
             })
         }
     })

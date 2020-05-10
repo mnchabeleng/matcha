@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const path = require('path')
+const verifyAuth = require('./middleware/verify_auth')
 
 const port = 3300
 app.listen(port, () => {
@@ -27,7 +27,6 @@ app.use((req, res, next)=>{
 // static files
 app.use('/img', express.static('img'))
 
-const verifyAuth = require('./middleware/verify_auth')
 // api routes
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))

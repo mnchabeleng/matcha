@@ -1,17 +1,26 @@
 'use strict'
 const db = require('../db/connect')
-const userRows = 'id, uname, email, fname, lname, bio, dob, gender, image,lat, lng, city, interests, image1, image2, image3, image4, image5'
+const userRows = 'id, uname, email, fname, lname, bio, dob, gender, image,lat, lng, city, interests, image1, image2, image3, image4, image5, views, likes'
 
 exports.getUsers = (data, callback) => {
     const user = data.user
     const gender = '%' + data.gender + '%'
     const city = '%' + data.city + '%'
+    const interest = '%' + data.interest + '%'
     const orderby = data.orderby
     const ageRange = data.ageRange
-    const query = 'SELECT ' + userRows + ' FROM users WHERE uname NOT IN(SELECT reciever AS uname FROM likes WHERE sender = ?) AND uname != ? AND gender LIKE ? AND city LIKE ? ' + ageRange + ' ' + orderby
-    db.query(query, [user, user, gender, city], (err, res) => {
+    const query = 'SELECT ' + userRows + ' FROM users WHERE uname NOT IN(SELECT reciever AS uname FROM likes WHERE sender = ?) AND uname != ? AND gender LIKE ? AND city LIKE ? AND interests LIKE ? ' + ageRange + ' ' + orderby
+    db.query(query, [user, user, gender, city, interest], (err, res) => {
         if (err) throw err.message
         callback(res)
+    })
+}
+
+exports.getLocation = (id, callback) => {
+    const query = 'SELECT * FROM city, lat, lng WHERE uname = ? LIMIT 1'
+    db.query(query, [id], (err, res) => {
+        if (err) throw err.message
+        callback(res[0])
     })
 }
 
@@ -99,6 +108,22 @@ exports.updatePassword = (data, callback) => {
 exports.updateImages = (data, callback) => {
     const query = `UPDATE users SET ${data.col} = ? WHERE id = ?`
     db.query(query, [data.image, data.id], (err, res) => {
+        if(err) throw err
+        callback(res)
+    })
+}
+
+exports.addView = (id, callback) => {
+    const query = 'UPDATE users SET views = views + 1 WHERE id = ?'
+    db.query(query, [id], (err, res) => {
+        if(err) throw err
+        callback(res)
+    })
+}
+
+exports.addLike = (id, callback) => {
+    const query = 'UPDATE users SET likes = likes + 1 WHERE id = ?'
+    db.query(query, [id], (err, res) => {
         if(err) throw err
         callback(res)
     })

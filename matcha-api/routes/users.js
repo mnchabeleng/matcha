@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const userModel = require('../models/user')
 const jwt = require('jsonwebtoken')
+const verifyAuth = require('../middleware/verify_auth')
 const dotenv = require('dotenv').config()
 const {
     JWT_SECRET_KEY
@@ -10,7 +11,7 @@ const {
 
 router.route('/')
 .get((req, res, next) => {
-    const data = {gender: '', city: '', ageRange: '', orderby: 'ORDER BY id DESC'}
+    const data = {gender: '', city: '', ageRange: '', interest: '', orderby: 'ORDER BY id DESC'}
 
     if (req.query.min || req.query.max)
     {
@@ -32,6 +33,9 @@ router.route('/')
     if (req.query.city)
         data.city = req.query.city
     
+    if(req.query.interest)
+        data.interest = req.query.interest
+    
     if (req.query.orderby)
     {
         const orderby = req.query.orderby
@@ -39,9 +43,13 @@ router.route('/')
             data.orderby = 'ORDER BY dob ASC'
         
         if (orderby === 'ageDESC')
-        {
             data.orderby = 'ORDER BY dob DESC'
-        }
+
+        if (orderby === 'likesDESC')
+            data.orderby = 'ORDER BY likes DESC'
+        
+        if (orderby === 'viewsDESC')
+            data.orderby = 'ORDER BY views DESC'
     }
 
     let token = undefined
@@ -52,7 +60,8 @@ router.route('/')
     {
         const decoded = jwt.verify(token, JWT_SECRET_KEY)
         data.user = decoded.uname
-        data.orderby = `ORDER BY ((lat-${decoded.lat})*(lat-${decoded.lat})) + ((lng - ${decoded.lng})*(lng - ${decoded.lng})) ASC`
+        if(orderby == 'ORDER BY id DESC')
+            data.orderby = `ORDER BY ((lat-${decoded.lat})*(lat-${decoded.lat})) + ((lng - ${decoded.lng})*(lng - ${decoded.lng})) ASC`
     }catch(err){}
 
     userModel.getUsers(data, (result) => {
@@ -77,11 +86,24 @@ router.route('/')
     })
 })
 
-router.route('/:userId')
-.get((req, res, next) => {
-    const id = req.params.userId
+router.get('/:id', (req, res, next) => {
+    const id = req.params.id
     userModel.getUserById(id, (result) => {
         res.status(200).json(result)
+    })
+})
+
+router.post('/:id/views', verifyAuth, (req, res, next) => {
+    const id = req.params.id
+    userModel.addView(id, (result) => {
+        res.status(200).json({status:true})
+    })
+})
+
+router.post('/:id/likes', verifyAuth, (req, res, next) => {
+    const id = req.params.id
+    userModel.addLike(id, (result) => {
+        res.status(200).json({status:true})
     })
 })
 

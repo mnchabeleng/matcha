@@ -1,9 +1,8 @@
 'use strict'
 document.title = 'Matcha Dashboard'
 
-const usersURL = 'data/users.json'
-const messagesURL = 'data/messages.json'
-const messagesURL_ = 'http://localhost:3300/messages/'
+const matchURL = 'http://localhost:3300/matches/'
+const messagesURL = 'http://localhost:3300/messages/'
 const notificationsURL = 'http://localhost:3300/notifications/'
 
 const topCol = document.querySelector('.top')
@@ -13,9 +12,11 @@ const notificationsCol = document.querySelector('.notifications-col')
 
 topCol.innerHTML = `<h1>${document.title}</h1>`
 
+let admin = ''
 let reciever = undefined
 async function loadDashboard(){
     const auth = await getAuthData()
+    admin = auth.authData.username
 
     if (auth.status === true)
     {
@@ -29,14 +30,18 @@ loadDashboard()
 
 // Get users from API
 function getUsers(){
-    fetch(usersURL).then(res => res.json()).then((data) => {
+    fetch(matchURL, {
+        headers: {'Authorization': 'Bearer ' + token}
+    }).then(res => res.json()).then((data) => {
         displayUsers(data)
     })
 }
 
 // Get Messages from API
 function getMessages(){
-    fetch(messagesURL).then(res => res.json()).then((data) => {
+    fetch(messagesURL + reciever, {
+        headers: {'Authorization': 'Bearer ' + token}
+    }).then(res => res.json()).then((data) => {
         displayMessages(data)
     })
 }
@@ -57,7 +62,7 @@ function displayUsers(usersList){
     usersList.forEach(function(user){
         const userElement = document.createElement('div')
         userElement.setAttribute('class', 'user')
-        userElement.innerText = user.username
+        userElement.innerText = user.uname
         usersElement.appendChild(userElement)
 
         userElement.addEventListener('click', function(){
@@ -66,7 +71,7 @@ function displayUsers(usersList){
                 user.classList.remove('active')
             })
             this.classList.add('active')
-            reciever = user.username
+            reciever = user.uname
             document.querySelector('.messages').innerHTML = ''
             document.querySelector('.message-form').innerHTML = ''
             getMessages()
@@ -84,20 +89,12 @@ function displayUsers(usersList){
 function displayMessages(messagesList){
     const messagesElement = document.querySelector('.messages')
     messagesList.forEach(function(message){
+
         const messageElement = document.createElement('div')
         messageElement.setAttribute('class', 'message')
         
-        const deleteMessage = document.createElement('div')
-        deleteMessage.setAttribute('class', 'delete')
-        deleteMessage.innerHTML = `<img src="img/delete.svg" height="25" width="25" alt="delete message">`
-        
-        messageElement.innerHTML = `<p class="message-sender"><b>hello</b></p><p class="message-body">${message.message}</p>`
-        messageElement.appendChild(deleteMessage)
+        messageElement.innerHTML = `<p class="message-sender"><b>${(message.sender != admin)?message.sender:'You'}</b></p><p class="message-body">${message.message}</p>`
         messagesElement.appendChild(messageElement)
-
-        deleteMessage.addEventListener('click', function(){
-            messageElement.style.display = 'none'
-        })
     })
 
     const searchMessage = document.querySelector('#search-message')
@@ -124,9 +121,8 @@ function displayMessages(messagesList){
     messageForm.addEventListener('submit', function(e){
         e.preventDefault()
         if(messageInput.value && reciever != undefined){
-            alert('A message was sent to ' + reciever + '.')
             sendMessage(reciever, messageInput.value)
-            this.reset()
+            messageForm.reset()
         }
         else
             messageInput.classList.add('danger-input')
@@ -182,7 +178,7 @@ function filterMessages(searchQuery = undefined){
 
 // Send message
 function sendMessage(reciever, message){
-    fetch(messagesURL_, {
+    fetch(messagesURL, {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -190,7 +186,8 @@ function sendMessage(reciever, message){
         },
         body: JSON.stringify({reciever, message})      
     }).then(function(res){
-        //displaySuccess('A message was sent to ' + reciever + '.')
-        console.log('A message was sent to ' + reciever + '.')
+        document.querySelector('.messages').innerHTML = ''
+        document.querySelector('.message-form').innerHTML = ''
+        getMessages()
     })
 }

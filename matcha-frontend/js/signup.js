@@ -104,6 +104,7 @@ function signup(){
             }else if(data.status == true){
                 clearFormErrors()
                 displaySuccess({message:data.message,class:'#signup-response'})
+                document.querySelector('#interests').value = ''
                 signupForm.reset()
             }
         })
