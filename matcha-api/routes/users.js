@@ -60,7 +60,7 @@ router.route('/')
     {
         const decoded = jwt.verify(token, JWT_SECRET_KEY)
         data.user = decoded.uname
-        if(orderby == 'ORDER BY id DESC')
+        if(data.orderby == 'ORDER BY id DESC')
             data.orderby = `ORDER BY ((lat-${decoded.lat})*(lat-${decoded.lat})) + ((lng - ${decoded.lng})*(lng - ${decoded.lng})) ASC`
     }catch(err){}
 
