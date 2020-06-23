@@ -3,13 +3,12 @@
 
 ## Before you run Matcha
 
-### Create database and import data(500 users required for testing)
-- #### Create Mysql database
-- #### Import ROOT_FOLDER/database/matcha.sql to the database
-
 ### Configure environment variables(.env) ~ (inside ROOT_FOLDER/matcha-api)
 - #### Rename ROOT_FOLDER/matcha-api/.env.default to ROOT_FOLDER/matcha-api/.env
-- #### Make sure to name all variables inside /matcha-api/.env correctly
+- #### Make sure to name all variables inside /matcha-api/.env appropriately
+
+### Create database and import data(500 users required for testing) ~ (inside ROOT_FOLDER/matcha-api)
+- #### To create Mysql database, run -> npm run setup
 
 ### Run Matcha API ~ (inside ROOT_FOLDER/matcha-api)
 - #### Install required node modules using command -> npm i
