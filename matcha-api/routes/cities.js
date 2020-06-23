@@ -8,13 +8,7 @@ router.get('/', (req, res, next) => {
         query: (req.query.q)?req.query.q:''
     }
     cityModel.getCities(data, (result) => {
-        const page = 1
-		const limit = 10
-	
-		const startIndex = (page - 1) * limit
-        const endIndex = page * limit
-
-        res.status(200).json(result.slice(startIndex, endIndex))
+        res.status(200).json(result)
     })
 })
 

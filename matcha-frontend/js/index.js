@@ -18,8 +18,45 @@ let userInterest = ''
 
 async function loadUsers(){
     getUsers()
+
+    document.querySelector('#location').addEventListener('input', function(){
+        suggestions.appendChild(cityList)
+        cityList.innerHTML = ''
+        searchCities(this.value)
+    })
 }
 loadUsers()
+
+const suggestions = document.querySelector('.suggestion-list')
+const cityList = document.createElement('ul')
+async function searchCities(searchQuery){
+    const location = document.querySelector('#location')
+
+    const cities = await fetch(citiesURL + `?q=${encodeURIComponent(searchQuery)}`).then(res => res.json())
+    
+    let matches = cities.filter(function(city){
+        const regex = new RegExp(`^${searchQuery}`, 'gi')
+        return city.city.match(regex)
+    })
+    
+    if(!searchQuery){
+        suggestions.innerHTML = ''
+        matches = []
+    }
+
+    if(matches.length > 0){
+        matches.forEach(function(match){
+            const listEl = document.createElement('li')
+            listEl.innerHTML = `<li><h4>${match.accent_city}</li>`
+            cityList.appendChild(listEl)
+
+            listEl.addEventListener('click', function(){
+                suggestions.innerHTML = ''
+                location.value = `${match.accent_city}`
+            })
+        })
+    }
+}
 
 function getUsers(){    
     const queries = `page=${page}&limit=${limit}&orderby=${orderBy}&gender=${gender}&min=${min}&max=${max}&city=${city}&interest=${userInterest}`
@@ -45,10 +82,6 @@ function displayInterests(interests){
     interestsEl += '</ul>'
 
     return interestsEl
-}
-
-function displayImages(images){
-
 }
 
 async function displayUsers(usersList){

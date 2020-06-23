@@ -15,14 +15,9 @@ const connect = mysql.createConnection({
 })
 
 connect.connect((err) => {
-	if (!err)
-	{
-		console.log('database connection success')
-	}
-	else
-	{
-		console.log('connection failed\n' + JSON.stringify(err, undefined , 2))
-	}
+	if (err)
+		throw err.message
+		//console.log('connection failed\n' + JSON.stringify(err, undefined , 2))
 });
 
 module.exports = connect
