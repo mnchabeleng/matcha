@@ -9,7 +9,3 @@ exports.getMatches = (data, callback) => {
         callback(res)
     })
 }
-
-exports.deleteMatch = (data, callback) => {
-
-}
