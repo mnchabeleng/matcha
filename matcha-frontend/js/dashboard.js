@@ -85,6 +85,29 @@ function displayUsers(usersList){
     })
 }
 
+setInterval(() => {
+    const messagesElement = document.querySelector('.messages')
+    messagesElement.innerHTML = ''
+
+    fetch(messagesURL + reciever, {
+        headers: {'Authorization': 'Bearer ' + token}
+    }).then(res => res.json()).then((messagesList) => {
+        messagesList.forEach(function(message){
+            const messageElement = document.createElement('div')
+            messageElement.setAttribute('class', 'message')
+            
+            messageElement.innerHTML = `<p class="message-sender"><b>${(message.sender != admin)?message.sender:'You'}</b></p><p class="message-body">${message.message}</p>`
+            messagesElement.appendChild(messageElement)
+
+            messagesElement.scrollTop = messagesElement.scrollHeight
+        })
+    })
+
+    document.querySelector('.notifications').innerHTML = ''
+    getNotifications()
+
+}, 5000)
+
 // Display messages
 function displayMessages(messagesList){
     const messagesElement = document.querySelector('.messages')
@@ -95,6 +118,8 @@ function displayMessages(messagesList){
         
         messageElement.innerHTML = `<p class="message-sender"><b>${(message.sender != admin)?message.sender:'You'}</b></p><p class="message-body">${message.message}</p>`
         messagesElement.appendChild(messageElement)
+
+        messagesElement.scrollTop = messagesElement.scrollHeight
     })
 
     const searchMessage = document.querySelector('#search-message')
