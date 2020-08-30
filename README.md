@@ -1,6 +1,8 @@
 # Matcha
 #### Dating site created using Javascript, Nodejs and Mysql
 
+![Screenshot](https://raw.githubusercontent.com/mnchabeleng/matcha/master/screenshot.png)
+
 ## Before you run Matcha
 
 ### Configure environment variables(.env) ~ (inside ROOT_FOLDER/matcha-api)
