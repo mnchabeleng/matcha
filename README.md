@@ -25,7 +25,7 @@ A dating site created using JavaScript, Nodejs and MySql. A user will be able to
 
 ### Run font-end
 ```
-- Open ROOT_FOLDER/matcha-frontend/index.html using your browser (Testing was done using mostly mozila firefox and liveserver vscode extension)
+* Open ROOT_FOLDER/matcha-frontend/index.html using your browser (Testing was done using mostly mozila firefox and liveserver vscode extension)
 ```
 
 
