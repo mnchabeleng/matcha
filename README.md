@@ -1,6 +1,14 @@
 # Matcha
 A dating site created using JavaScript, Nodejs and MySql. A user will be able to register, log in, fill in his/her profile information, search and look into the profile of other users, like them, chat with those that liked back.
 
+## Created using
+- Nodejs
+- Express
+- HTML
+- CSS
+- Javascript
+- Mysql
+
 ## Before you run Matcha
 
 ### Configure environment variables(.env)
