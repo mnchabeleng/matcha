@@ -29,4 +29,4 @@ A dating site created using JavaScript, Nodejs and MySql. A user will be able to
 ```
 
 
-![Screenshot](https://raw.githubusercontent.com/mnchabeleng/matcha/master/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/mnchabeleng/matcha/master/screenshots/matchs.png)
