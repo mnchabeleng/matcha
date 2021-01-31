@@ -11,6 +11,18 @@ A dating site created using JavaScript, Nodejs and MySql. It allow users to regi
 
 ## Before you run Matcha
 
+
+### Download
+
+```
+1. Download zip
+2. Extract files
+```
+
+```
+1. git clone https://github.com/mnchabeleng/matcha.git
+```
+
 ### Configure environment variables(.env)
 
 ```
