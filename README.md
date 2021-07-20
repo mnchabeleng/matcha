@@ -1,6 +1,11 @@
 # Matcha
 A dating site created using JavaScript, Nodejs and MySql. It allow users to register, log in, fill in their profile information, search and look into the profile of other users, like them, and chat with those that liked back.
 
+### Screenshot
+
+![Screenshot](https://raw.githubusercontent.com/mnchabeleng/matcha/master/screenshots/matchs.png)
+
+
 ## Created using
 - Nodejs
 - Express
@@ -43,10 +48,7 @@ A dating site created using JavaScript, Nodejs and MySql. It allow users to regi
 2. $ npm start
 ```
 
-### Run font-end
+
 ```
 - Open ROOT_FOLDER/matcha-frontend/index.html using your browser (Testing was done using mostly mozila firefox and liveserver vscode extension)
 ```
-
-
-![Screenshot](https://raw.githubusercontent.com/mnchabeleng/matcha/master/screenshots/matchs.png)
